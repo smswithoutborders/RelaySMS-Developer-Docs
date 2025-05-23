@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 
 import { FooterComp, NavComp } from "./components";
-import { Main, Publish, Vault } from "./pages";
+import { ClientComp, Main, Publish, Vault } from "./pages";
 import { createAppTheme } from "./components/theme";
 
 function App() {
@@ -33,6 +33,7 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/publish" element={<Publish />} />
           <Route path="/vault" element={<Vault />} />
+           <Route path="/client" element={<ClientComp />} />
         </Routes>
         <FooterComp />
       </Router>

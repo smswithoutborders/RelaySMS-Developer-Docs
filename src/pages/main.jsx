@@ -135,6 +135,9 @@ const Main = () => {
           <Grid size={{ md: 4, xs: 6 }}>
             <ButtonOutline text="Telemetry" />
           </Grid>
+          <Grid size={{ md: 4, xs: 6 }}>
+            <ButtonOutline text="Reliability Test" />
+          </Grid>
         </Grid>
       </Box>
     </Box>
