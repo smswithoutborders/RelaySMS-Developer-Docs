@@ -1,8 +1,19 @@
 import React, { useState } from "react";
-import { Box, Typography, IconButton, Drawer, Grid } from "@mui/material";
+import {
+  Box,
+  Typography,
+  IconButton,
+  Drawer,
+  Grid,
+  Button,
+} from "@mui/material";
 import "reactflow/dist/style.css";
 import ReactFlow, { Background, Controls, MiniMap } from "reactflow";
-import { CloseCircleOutlined } from "@ant-design/icons";
+import {
+  CloseCircleOutlined,
+  LeftOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
 import ExternalPlatforms from "../Documentation/platforms/index.mdx";
 import ExternalBridge from "../Documentation/platforms/bridgePlatforms.mdx";
 import Client from "../Documentation/client/index.mdx";
@@ -132,6 +143,13 @@ const PublishContent = () => {
     setSelectedNode(null);
   };
 
+  const content = `{
+  "content": "encoded_relay_sms_payload",
+  "metadata": {
+    "From": "+1234567890"
+  }
+}`;
+
   return (
     <Box>
       <Box
@@ -155,10 +173,7 @@ const PublishContent = () => {
           Publish Content
         </Typography>
         <Typography variant="h6" sx={{ py: { md: 8, xs: 4 } }} wrap>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+          This method handles publishing a relaysms payload.
         </Typography>
       </Box>
       {/*  */}
@@ -169,7 +184,7 @@ const PublishContent = () => {
           my: "auto",
           alignContent: "center",
           textAlign: "center",
-          mb: { xs: 6, md: 15, sm: 10, lg: 25 },
+          mb: { xs: 6, md: 15, sm: 10, lg: 8 },
           mx: { xs: 2, md: 15, sm: 10, lg: 25 },
         }}
       >
@@ -187,6 +202,24 @@ const PublishContent = () => {
             panOnScroll={false}
           />
         </Box>
+      </Box>
+      <Box
+        sx={{
+          mx: { xs: 2, md: 15, sm: 10, lg: 25 },
+          my: 3,
+          mb: 10
+        }}
+      >
+        <Typography variant="h6">Sample payload.json</Typography>
+        <pre
+          style={{
+            margin: 0,
+            whiteSpace: "pre-wrap",
+            wordBreak: "break-word",
+          }}
+        >
+          {content}
+        </pre>
       </Box>
       <Drawer
         anchor="right"
@@ -219,6 +252,49 @@ const PublishContent = () => {
           )}
         </Box>
       </Drawer>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          mx: { xs: 2, md: 15, sm: 10, lg: 25 },
+          my: 5,
+        }}
+      >
+        <Button
+          variant="text"
+          component="a"
+          href="/store-token"
+          startIcon={<LeftOutlined />}
+          sx={{
+            textDecoration: "underline",
+            fontWeight: "bold",
+            fontSize: "1rem",
+            color: "primary.main",
+            "&:hover": {
+              textDecoration: "none",
+            },
+          }}
+        >
+          Back to Store Token
+        </Button>
+        <Button
+          variant="text"
+          component="a"
+          href="/telemetry-docs"
+          endIcon={<RightOutlined />}
+          sx={{
+            textDecoration: "underline",
+            fontWeight: "bold",
+            fontSize: "1rem",
+            color: "primary.main",
+            "&:hover": {
+              textDecoration: "none",
+            },
+          }}
+        >
+          Continue to Telemetry
+        </Button>
+      </Box>
     </Box>
   );
 };

@@ -1,135 +1,113 @@
 import React, { useState } from "react";
-import { Box, Typography, IconButton, Drawer, Grid } from "@mui/material";
+import {
+  Box,
+  Typography,
+  IconButton,
+  Drawer,
+  Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Snackbar,
+  Button,
+} from "@mui/material";
 import "reactflow/dist/style.css";
-import ReactFlow, { Background, Controls, MiniMap } from "reactflow";
-import { CloseCircleOutlined } from "@ant-design/icons";
-import ExternalPlatforms from "../Documentation/platforms/index.mdx";
-import ExternalBridge from "../Documentation/platforms/bridgePlatforms.mdx";
-import Client from "../Documentation/client/index.mdx";
-import GatewayClient from "../Documentation/gatewayClient/index.mdx";
-import GatewayServer from "../Documentation/gatewayServer/index.mdx";
-import Publisher from "../Documentation/publisher/index.mdx";
-import BridgeServer from "../Documentation/bridgeServer/index.mdx";
-import Vault from "../Documentation/vault/index.mdx";
+import ReactFlow from "reactflow";
+import {
+  CloseCircleOutlined,
+  CopyOutlined,
+  LeftOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
+import Client from "../dataFlow/storeToken/client.mdx";
+import Vault from "../dataFlow/storeToken/vault.mdx";
+import { Link } from "react-router-dom";
 
 const nodeDescriptions = {
   client: {
     title: "Clients (Apps)",
     content: <Client />,
   },
-  gatewayClient: {
-    title: "Gateway Client",
-    content: <GatewayClient />,
-  },
-  gatewayServer: {
-    title: "Gateway Server",
-    content: <GatewayServer />,
-  },
-  Publisher: {
-    title: "Publisher",
-    content: <Publisher />,
-  },
-  bridgeServer: {
-    title: "Bridge Server",
-    content: <BridgeServer />,
-  },
   vault: {
     title: "Vault",
     content: <Vault />,
-  },
-  externalPlatforms: {
-    title: "External Platforms",
-    content: <ExternalPlatforms />,
-  },
-  externalBridges: {
-    title: "External Bridges",
-    content: <ExternalBridge />,
   },
 };
 
 const nodes = [
   {
-    id: "1",
-    position: { x: 0, y: 100 },
+    id: "client",
+    position: { x: 100, y: 200 },
     data: { label: "Client (Apps)" },
     type: "client",
   },
   {
-    id: "2",
-    position: { x: 200, y: 100 },
-    data: { label: "Gateway Client" },
-    type: "gatewayClient",
-  },
-  {
-    id: "3",
-    position: { x: 400, y: 100 },
-    data: { label: "Gateway Server" },
-    type: "gatewayServer",
-  },
-  {
-    id: "4",
-    position: { x: 600, y: 50 },
-    data: { label: "Publisher" },
-    type: "publisher",
-  },
-  {
-    id: "5",
-    position: { x: 600, y: 150 },
-    data: { label: "Bridge Server" },
-    type: "bridgeServer",
-  },
-  {
-    id: "6",
-    position: { x: 800, y: 100 },
+    id: "vault",
+    position: { x: 400, y: 200 },
     data: { label: "Vault" },
     type: "vault",
-  },
-  {
-    id: "7",
-    position: { x: 1000, y: 50 },
-    data: { label: "External Platforms\n(Gmail etc.)" },
-    type: "externalPlatforms",
-  },
-  {
-    id: "8",
-    position: { x: 1000, y: 150 },
-    data: { label: "External Bridges\n(Email Aliases etc.)" },
-    type: "externalBridges",
   },
 ];
 
 const edges = [
-  { id: "e1-2", source: "1", target: "2", animated: true },
-  { id: "e2-3", source: "2", target: "3", animated: true },
-  { id: "e3-4", source: "3", target: "4", animated: true },
-  { id: "e3-5", source: "3", target: "5", animated: true },
   {
-    id: "e4-6",
-    source: "4",
-    target: "6",
+    id: "payload",
+    source: "client",
+    target: "vault",
     animated: true,
-    label: "Verify Token",
+    type: "step",
+    markerEnd: { type: "arrowclosed" },
   },
   {
-    id: "e5-6",
-    source: "5",
-    target: "6",
+    id: "response",
+    source: "vault",
+    target: "client",
     animated: true,
-    label: "Verify Token",
+    style: { stroke: "#1976d2" },
+    type: "offset",
+    markerEnd: { type: "arrowclosed", color: "#1976d2" },
   },
-  { id: "e4-7", source: "4", target: "7", animated: true },
-  { id: "e5-8", source: "5", target: "8", animated: true },
 ];
 
 const StoreToken = () => {
   const [selectedNode, setSelectedNode] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogContent, setDialogContent] = useState("");
+  const [dialogType, setDialogType] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const handleNodeClick = (_, node) => {
-    setSelectedNode(node);
+    if (node.type === "client" || node.type === "vault") {
+      setSelectedNode(node);
+    }
   };
 
-  const handleCloseDrawer = () => {
-    setSelectedNode(null);
+  const handleCloseDrawer = () => setSelectedNode(null);
+  const handleCloseDialog = () => setDialogOpen(false);
+
+  const handleEdgeClick = (_, edge) => {
+    if (edge.id === "payload") {
+      setDialogType("payload");
+      setDialogContent(`{
+  "long_lived_token": "long_lived_token",
+  "authorization_code": "oauth2_code",
+  "platform": "gmail",
+  "protocol": "oauth2"
+}`);
+    } else if (edge.id === "response") {
+      setDialogType("response");
+      setDialogContent(`{
+  "message": "Token stored successfully.",
+  "success": true
+}`);
+    }
+
+    setDialogOpen(true);
+  };
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+    setSnackbarOpen(true);
   };
 
   return (
@@ -137,11 +115,8 @@ const StoreToken = () => {
       <Box
         sx={{
           pt: { xs: 15, sm: 20, md: 15 },
-          my: "auto",
-          alignContent: "center",
-          textAlign: "center",
-
           mx: { xs: 2, md: 15, sm: 10, lg: 25 },
+          textAlign: "center",
         }}
       >
         <Typography
@@ -150,35 +125,27 @@ const StoreToken = () => {
             fontWeight: "bold",
             fontSize: { xs: "3rem", sm: "4rem", md: "6rem" },
           }}
-          className="header"
         >
           Store Token
         </Typography>
-        <Typography variant="h6" sx={{ py: { md: 8, xs: 4 } }} wrap>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+        <Typography variant="h6" sx={{ py: { md: 8, xs: 4 } }}>
+          This step involves storing tokens securely for the authenticated
+          entity. That is giving RelaySMS access to publish messages on your behalf.
         </Typography>
       </Box>
-      {/*  */}
 
-      <Box
-        sx={{
-          pt: { xs: 2, sm: 2, md: 2 },
-          my: "auto",
-          alignContent: "center",
-          textAlign: "center",
-          mb: { xs: 6, md: 15, sm: 10, lg: 25 },
-          mx: { xs: 2, md: 15, sm: 10, lg: 25 },
-        }}
-      >
-        <Box sx={{ height: 300, borderRadius: 2, border: "1px solid #ccc" }}>
+      {/* Step 1 */}
+      <Box sx={{ my: 10, mx: { xs: 2, md: 15, sm: 10, lg: 25 } }}>
+        <Alert severity="info">
+          Tip: Click on the arrows in the diagram to see the payload structure.
+        </Alert>
+        <Box sx={{ height: 300, borderRadius: 2 }}>
           <ReactFlow
             nodes={nodes}
             edges={edges}
             fitView
             onNodeClick={handleNodeClick}
+            onEdgeClick={handleEdgeClick}
             nodesDraggable={false}
             nodesConnectable={false}
             elementsSelectable={false}
@@ -187,38 +154,132 @@ const StoreToken = () => {
             panOnScroll={false}
           />
         </Box>
+        <Typography variant="subtitle1" sx={{ py: { md: 8, xs: 4 } }}>
+          You can store tokens for the follwing platforms:
+          <ul>
+            <li>Gmail</li>
+            <li>Twitter</li>
+            <li>Telegram</li>
+          </ul>
+        </Typography>
       </Box>
-      <Drawer
-        anchor="right"
-        open={!!selectedNode}
-        onClose={handleCloseDrawer}
-        PaperProps={{ sx: { width: { xs: "100%", sm: 400, lg: 600 }, p: 3 } }}
-      >
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          {selectedNode && (
-            <Box>
-              <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Grid size={10}>
-                  <Typography variant="h5" fontWeight="bold">
-                    {nodeDescriptions[selectedNode.type]?.title}
-                  </Typography>
-                </Grid>
-                <Grid size={2} justifyContent="flex-end" alignItems="end">
-                  <IconButton onClick={handleCloseDrawer}>
-                    <CloseCircleOutlined />
-                  </IconButton>
-                </Grid>
-              </Grid>
-              <Box mt={2}>{nodeDescriptions[selectedNode.type]?.content}</Box>
-            </Box>
-          )}
+
+      {/* Drawer */}
+      <Drawer anchor="right" open={!!selectedNode} onClose={handleCloseDrawer}>
+        <Box sx={{ width: 400, p: 3 }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
+            <Typography variant="h6">
+              {selectedNode && nodeDescriptions[selectedNode.type]?.title}
+            </Typography>
+            <IconButton onClick={handleCloseDrawer}>
+              <CloseCircleOutlined />
+            </IconButton>
+          </Box>
+          {selectedNode && nodeDescriptions[selectedNode.type]?.content}
         </Box>
       </Drawer>
+
+      {/* Dialog */}
+      <Dialog
+        open={dialogOpen}
+        onClose={handleCloseDialog}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          {dialogType === "payload"
+            ? "Payload"
+            : dialogType === "response"
+            ? "Response"
+            : "Details"}
+        </DialogTitle>
+        <DialogContent>
+          <Box
+            sx={{
+              position: "relative",
+              backgroundColor: "background.paper",
+              borderRadius: 2,
+              p: 2,
+              overflowX: "auto",
+              fontFamily: "monospace",
+              fontSize: 14,
+            }}
+          >
+            <IconButton
+              onClick={() => copyToClipboard(dialogContent)}
+              size="small"
+              sx={{
+                position: "absolute",
+                top: 8,
+                right: 8,
+              }}
+            >
+              <CopyOutlined fontSize="small" />
+            </IconButton>
+            <pre
+              style={{
+                margin: 0,
+                whiteSpace: "pre-wrap",
+                wordBreak: "break-word",
+              }}
+            >
+              {dialogContent}
+            </pre>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={2000}
+        onClose={() => setSnackbarOpen(false)}
+        message="Copied to clipboard"
+      />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          mx: { xs: 2, md: 15, sm: 10, lg: 25 },
+          my: 5,
+        }}
+      >
+        <Button
+          variant="text"
+          component="a"
+          href="/authenticate-entity"
+          startIcon={<LeftOutlined />}
+          sx={{
+            textDecoration: "underline",
+            fontWeight: "bold",
+            fontSize: "1rem",
+            color: "primary.main",
+            "&:hover": {
+              textDecoration: "none",
+            },
+          }}
+        >
+          Back to Authenticate Entity
+        </Button>
+        <Button
+          variant="text"
+          component="a"
+          href="/publish-content"
+          endIcon={<RightOutlined />}
+          sx={{
+            textDecoration: "underline",
+            fontWeight: "bold",
+            fontSize: "1rem",
+            color: "primary.main",
+            "&:hover": {
+              textDecoration: "none",
+            },
+          }}
+        >
+          Continue to Publish Content
+        </Button>
+      </Box>
     </Box>
   );
 };
