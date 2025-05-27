@@ -1,49 +1,54 @@
 import React, { useState } from "react";
-import { Box, Typography, IconButton, Drawer, Grid } from "@mui/material";
+import {
+  Box,
+  Typography,
+  IconButton,
+  Drawer,
+  Grid,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import "reactflow/dist/style.css";
 import ReactFlow, { Background, Controls, MiniMap } from "reactflow";
-import { CloseCircleOutlined } from "@ant-design/icons";
-import ExternalPlatforms from "../Documentation/platforms/index.mdx";
-import ExternalBridge from "../Documentation/platforms/bridgePlatforms.mdx";
-import Client from "../Documentation/client/index.mdx";
-import GatewayClient from "../Documentation/gatewayClient/index.mdx";
-import GatewayServer from "../Documentation/gatewayServer/index.mdx";
-import Publisher from "../Documentation/publisher/index.mdx";
-import BridgeServer from "../Documentation/bridgeServer/index.mdx";
-import Vault from "../Documentation/vault/index.mdx";
+import {
+  CloseCircleOutlined,
+  LeftOutlined,
+  CopyOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
+import Publisher from "../dataFlow/telemetry/publisher.mdx";
+import Vault from "../dataFlow/telemetry/vault.mdx";
+import TelemetryAggregator from "../dataFlow/telemetry/telemetryAggregator.mdx";
 
 const nodeDescriptions = {
   client: {
     title: "Clients (Apps)",
-    content: <Client />,
+    content: <div> Hey </div>,
   },
   gatewayClient: {
     title: "Gateway Client",
-    content: <GatewayClient />,
+    content: <div> Hey </div>,
   },
   gatewayServer: {
     title: "Gateway Server",
-    content: <GatewayServer />,
+    content: <div> Hey </div>,
   },
   Publisher: {
     title: "Publisher",
-    content: <Publisher />,
+    content: <div> Hey </div>,
   },
   bridgeServer: {
     title: "Bridge Server",
-    content: <BridgeServer />,
+    content: <div> Hey </div>,
   },
   vault: {
-    title: "Vault",
-    content: <Vault />,
-  },
-  externalPlatforms: {
-    title: "External Platforms",
-    content: <ExternalPlatforms />,
-  },
-  externalBridges: {
-    title: "External Bridges",
-    content: <ExternalBridge />,
+    title: "Test Platform",
+    content: <div> Hey </div>,
   },
 };
 
@@ -81,25 +86,13 @@ const nodes = [
   {
     id: "6",
     position: { x: 800, y: 100 },
-    data: { label: "Vault" },
-    type: "vault",
-  },
-  {
-    id: "7",
-    position: { x: 1000, y: 50 },
-    data: { label: "External Platforms\n(Gmail etc.)" },
-    type: "externalPlatforms",
-  },
-  {
-    id: "8",
-    position: { x: 1000, y: 150 },
-    data: { label: "External Bridges\n(Email Aliases etc.)" },
-    type: "externalBridges",
+    data: { label: "Test Platform" },
+    type: "test",
   },
 ];
 
 const edges = [
-  { id: "e1-2", source: "1", target: "2", animated: true },
+  { id: "e1-2", label: "payload", source: "1", target: "2", animated: true },
   { id: "e2-3", source: "2", target: "3", animated: true },
   { id: "e3-4", source: "3", target: "4", animated: true },
   { id: "e3-5", source: "3", target: "5", animated: true },
@@ -108,21 +101,24 @@ const edges = [
     source: "4",
     target: "6",
     animated: true,
-    label: "Verify Token",
   },
   {
     id: "e5-6",
     source: "5",
     target: "6",
     animated: true,
-    label: "Verify Token",
   },
-  { id: "e4-7", source: "4", target: "7", animated: true },
+  { id: "e4-7", label: "response", source: "4", target: "7", animated: true },
   { id: "e5-8", source: "5", target: "8", animated: true },
 ];
 
 const ReliabilityTest = () => {
   const [selectedNode, setSelectedNode] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogContent, setDialogContent] = useState("");
+  const [dialogType, setDialogType] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
 
   const handleNodeClick = (_, node) => {
     setSelectedNode(node);
@@ -130,6 +126,47 @@ const ReliabilityTest = () => {
 
   const handleCloseDrawer = () => {
     setSelectedNode(null);
+  };
+  const handleCloseDialog = () => setDialogOpen(false);
+
+  const handleEdgeClick = (_, edge) => {
+    if (currentStep === 1) {
+      if (edge.id === "e1-2") {
+        setDialogType("payload");
+        setDialogContent(`curl -X POST "https://api.example.com/v3/clients/1234567890/tests" \
+-H "Content-Type: application/json"}`);
+      } else if (edge.id === "e4-7") {
+        setDialogType("response");
+        setDialogContent(`{
+  "message": "Test started successfully",
+  "test_id": 1,
+  "test_start_time": 1746799899
+}`);
+      }
+    } else if (currentStep === 2) {
+      if (edge.id === "e1-2") {
+        setDialogType("payload");
+        setDialogContent(`curl -X POST "https://api.example.com/v3/publish" \
+-H "Content-Type: application/json" \
+-d '{
+  "payload": "ENCRYPTED_CONTENT"
+}'`);
+      } else if (edge.id === "e4-7") {
+        setDialogType("response");
+        setDialogContent(`{
+  "message": "Message published to Reliability Platform",
+}`);
+      }
+    }
+    setDialogOpen(true);
+  };
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+    setSnackbarOpen(true);
+  };
+
+  const config = {
+    endpoint: "POST /v3/clients/<msisdn>/tests",
   };
 
   return (
@@ -152,33 +189,37 @@ const ReliabilityTest = () => {
           }}
           className="header"
         >
-         Reliability Test
+          Reliability Test
         </Typography>
         <Typography variant="h6" sx={{ py: { md: 8, xs: 4 } }} wrap>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+          The test is designed to measure how reliable a gateway client is in
+          receiving and routing SMS messages accurately and promptly.
         </Typography>
       </Box>
       {/*  */}
 
+      {/* Step 1 */}
       <Box
-        sx={{
-          pt: { xs: 2, sm: 2, md: 2 },
-          my: "auto",
-          alignContent: "center",
-          textAlign: "center",
-          mb: { xs: 6, md: 15, sm: 10, lg: 25 },
-          mx: { xs: 2, md: 15, sm: 10, lg: 25 },
-        }}
+        sx={{ my: 10, mx: { xs: 2, md: 15, sm: 10, lg: 25 } }}
+        onMouseEnter={() => setCurrentStep(1)}
       >
-        <Box sx={{ height: 300, borderRadius: 2, border: "1px solid #ccc" }}>
+        <Typography variant="h4" gutterBottom>
+          Step 1: Initiate Test
+        </Typography>
+        <Typography variant="subtitle1" sx={{ py: { md: 8, xs: 4 } }}>
+          To initiate a reliability test, send a request to the gateway server
+          using the following endpoint: <code>{config.endpoint}</code>
+        </Typography>
+        <Alert severity="info">
+          Tip: Click on the payload in the diagram to see the payload structure.
+        </Alert>
+        <Box sx={{ height: 300, borderRadius: 2 }}>
           <ReactFlow
             nodes={nodes}
             edges={edges}
             fitView
             onNodeClick={handleNodeClick}
+            onEdgeClick={handleEdgeClick}
             nodesDraggable={false}
             nodesConnectable={false}
             elementsSelectable={false}
@@ -188,6 +229,36 @@ const ReliabilityTest = () => {
           />
         </Box>
       </Box>
+
+      {/* Step 2 */}
+      <Box
+        sx={{ my: 10, mx: { xs: 2, md: 15, sm: 10, lg: 25 } }}
+        onMouseEnter={() => setCurrentStep(2)}
+      >
+        <Typography variant="h4" gutterBottom>
+          Step 2: Complete Test
+        </Typography>
+        <Typography variant="subtitle1" sx={{ py: { md: 8, xs: 4 } }}>
+          Once the test is started, send the test payload to the gateway client
+          using the regular <a href="/publish-content">publish </a> flow.
+        </Typography>
+        <Box sx={{ height: 300, borderRadius: 2 }}>
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            fitView
+            onNodeClick={handleNodeClick}
+            onEdgeClick={handleEdgeClick}
+            nodesDraggable={false}
+            nodesConnectable={false}
+            elementsSelectable={false}
+            zoomOnScroll={false}
+            panOnDrag={false}
+            panOnScroll={false}
+          />
+        </Box>
+      </Box>
+
       <Drawer
         anchor="right"
         open={!!selectedNode}
@@ -219,6 +290,90 @@ const ReliabilityTest = () => {
           )}
         </Box>
       </Drawer>
+      {/*  */}
+      <Dialog
+        open={dialogOpen}
+        onClose={handleCloseDialog}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          {dialogType === "payload"
+            ? "Payload"
+            : dialogType === "response"
+            ? "Response"
+            : "Details"}
+        </DialogTitle>
+        <DialogContent>
+          <Box
+            sx={{
+              position: "relative",
+              backgroundColor: "background.paper",
+              borderRadius: 2,
+              p: 2,
+              overflowX: "auto",
+              fontFamily: "monospace",
+              fontSize: 14,
+            }}
+          >
+            <IconButton
+              onClick={() => copyToClipboard(dialogContent)}
+              size="small"
+              sx={{
+                position: "absolute",
+                top: 8,
+                right: 8,
+              }}
+            >
+              <CopyOutlined fontSize="small" />
+            </IconButton>
+            <pre
+              style={{
+                margin: 0,
+                whiteSpace: "pre-wrap",
+                wordBreak: "break-word",
+              }}
+            >
+              {dialogContent}
+            </pre>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={2000}
+        onClose={() => setSnackbarOpen(false)}
+        message="Copied to clipboard"
+      />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-start",
+          mx: { xs: 2, md: 15, sm: 10, lg: 25 },
+          mb: 10,
+        }}
+      >
+        <Button
+          variant="text"
+          component="a"
+          href="/telemetry-docs"
+          startIcon={<LeftOutlined />}
+          sx={{
+            textDecoration: "underline",
+            fontWeight: "bold",
+            fontSize: "1rem",
+            color: "primary.main",
+            "&:hover": {
+              textDecoration: "none",
+            },
+          }}
+        >
+          Back to Telemetry
+        </Button>
+      </Box>
     </Box>
   );
 };
