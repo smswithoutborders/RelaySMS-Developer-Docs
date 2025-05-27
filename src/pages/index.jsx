@@ -1,13 +1,9 @@
 export { default as Main } from './main';
-export {default as Publish} from './publish';
-export {default as Vault} from './vault';
-export {default as Clients} from './clients';
-export {default as ClientComp} from './clientComp';
-export {default as GatewayClient} from './gatewayClient';
-export {default as GatewayServer} from './gatewayServer';
-export {default as Publisher} from './publisher';
-export {default as BridgeServer} from './bridgeServer';
-export {default as ExternalPlatforms} from './externalPlatforms';
-export {default as ExternalBridge} from './externalBridge';
+export {default as PublishContent} from './publishContent';
+export { default as AuthenticateEntity } from './authenticateEntity';
+export { default as StoreToken } from './storeToken';
+export { default as Telemetry } from './telemetry';
+export { default as ReliabilityTest } from './reliabilityTest';
+export { default as CreateEntity } from './createEntity';
 
 

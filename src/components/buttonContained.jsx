@@ -1,14 +1,14 @@
 import React from "react";
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 
-const ButtonContained = ({ text, linkTo }) => {
+const ButtonContained = ({ text, linkTo, onClick, fontSize }) => {
   return (
     <Button
-      onClick={() => window.open(linkTo,  "_self")}
+      onClick={onClick || (() => window.open(linkTo, "_self"))}
       fullWidth
       variant="contained"
       size="large"
-      sx={{ p: 1.5, textTransform: "none" }}
+      sx={{ p: 2, textTransform: "none", fontSize: {fontSize}, fontWeight: "bold" }}
     >
       {text}
     </Button>

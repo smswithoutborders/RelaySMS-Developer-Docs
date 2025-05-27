@@ -4,17 +4,24 @@ import { useState, useMemo, useEffect } from "react";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 
 import { FooterComp, NavComp } from "./components";
-import { ClientComp, Main, Publish, Vault } from "./pages";
+import {
+  AuthenticateEntity,
+  CreateEntity,
+  Main,
+  PublishContent,
+  ReliabilityTest,
+  StoreToken,
+  Telemetry,
+} from "./pages";
 import { createAppTheme } from "./components/theme";
 
 function App() {
   const [mode, setMode] = useState(() => {
     const storedMode = localStorage.getItem("themeMode");
-    return storedMode || "dark"; 
+    return storedMode || "dark";
   });
 
   useEffect(() => {
-    // Update localStorage when mode changes
     localStorage.setItem("themeMode", mode);
   }, [mode]);
 
@@ -31,9 +38,12 @@ function App() {
         <NavComp toggleMode={toggleMode} mode={mode} />
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/publish" element={<Publish />} />
-          <Route path="/vault" element={<Vault />} />
-           <Route path="/client" element={<ClientComp />} />
+          <Route path="/publish-content" element={<PublishContent />} />
+          <Route path="/create-entity" element={<CreateEntity />} />
+          <Route path="/authenticate-entity" element={<AuthenticateEntity />} />
+          <Route path="/store-token" element={<StoreToken />} />
+          <Route path="/reliability-test" element={<ReliabilityTest />} />
+          <Route path="/telemetry-docs" element={<Telemetry />} />
         </Routes>
         <FooterComp />
       </Router>

@@ -2,20 +2,49 @@ import React, { useState } from "react";
 import { Box, Typography, IconButton, Drawer, Grid } from "@mui/material";
 import "reactflow/dist/style.css";
 import ReactFlow, { Background, Controls, MiniMap } from "reactflow";
-import Clients from "./clients";
 import { CloseCircleOutlined } from "@ant-design/icons";
+import ExternalPlatforms from "../Documentation/platforms/index.mdx";
+import ExternalBridge from "../Documentation/platforms/bridgePlatforms.mdx";
+import Client from "../Documentation/client/index.mdx";
+import GatewayClient from "../Documentation/gatewayClient/index.mdx";
+import GatewayServer from "../Documentation/gatewayServer/index.mdx";
+import Publisher from "../Documentation/publisher/index.mdx";
+import BridgeServer from "../Documentation/bridgeServer/index.mdx";
+import Vault from "../Documentation/vault/index.mdx";
 
 const nodeDescriptions = {
   client: {
     title: "Clients (Apps)",
-    content: <Clients />,
+    content: <Client />,
   },
   gatewayClient: {
     title: "Gateway Client",
-    content:
-      "The gateway client receives messages from apps and forwards them to the gateway server.",
+    content: <GatewayClient />,
   },
-  // ...
+  gatewayServer: {
+    title: "Gateway Server",
+    content: <GatewayServer />,
+  },
+  Publisher: {
+    title: "Publisher",
+    content: <Publisher />,
+  },
+  bridgeServer: {
+    title: "Bridge Server",
+    content: <BridgeServer />,
+  },
+  vault: {
+    title: "Vault",
+    content: <Vault />,
+  },
+  externalPlatforms: {
+    title: "External Platforms",
+    content: <ExternalPlatforms />,
+  },
+  externalBridges: {
+    title: "External Bridges",
+    content: <ExternalBridge />,
+  },
 };
 
 const nodes = [
@@ -92,7 +121,7 @@ const edges = [
   { id: "e5-8", source: "5", target: "8", animated: true },
 ];
 
-const ClientComp = () => {
+const Telemetry = () => {
   const [selectedNode, setSelectedNode] = useState(null);
 
   const handleNodeClick = (_, node) => {
@@ -123,7 +152,7 @@ const ClientComp = () => {
           }}
           className="header"
         >
-          Client
+          Telemetry
         </Typography>
         <Typography variant="h6" sx={{ py: { md: 8, xs: 4 } }} wrap>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -194,4 +223,4 @@ const ClientComp = () => {
   );
 };
 
-export default ClientComp;
+export default Telemetry;

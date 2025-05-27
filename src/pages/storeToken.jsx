@@ -3,42 +3,47 @@ import { Box, Typography, IconButton, Drawer, Grid } from "@mui/material";
 import "reactflow/dist/style.css";
 import ReactFlow, { Background, Controls, MiniMap } from "reactflow";
 import { CloseCircleOutlined } from "@ant-design/icons";
-import Clients from "./clients";
-import GatewayClient from "./gatewayClient";
-import GatewayServer from "./gatewayServer";
-import Publisher from "./publisher";
-import BridgeServer from "./bridgeServer";
-import ExternalPlatforms from "./externalPlatforms";
-import ExternalBridge from "./externalBridge";
+import ExternalPlatforms from "../Documentation/platforms/index.mdx";
+import ExternalBridge from "../Documentation/platforms/bridgePlatforms.mdx";
+import Client from "../Documentation/client/index.mdx";
+import GatewayClient from "../Documentation/gatewayClient/index.mdx";
+import GatewayServer from "../Documentation/gatewayServer/index.mdx";
+import Publisher from "../Documentation/publisher/index.mdx";
+import BridgeServer from "../Documentation/bridgeServer/index.mdx";
+import Vault from "../Documentation/vault/index.mdx";
 
 const nodeDescriptions = {
   client: {
     title: "Clients (Apps)",
-    content: <Clients />,
+    content: <Client />,
   },
   gatewayClient: {
     title: "Gateway Client",
-    content: <GatewayClient/>,
+    content: <GatewayClient />,
   },
   gatewayServer: {
     title: "Gateway Server",
-    content: <GatewayServer/>,
+    content: <GatewayServer />,
   },
   Publisher: {
     title: "Publisher",
-    content: <Publisher/>,
+    content: <Publisher />,
   },
   bridgeServer: {
     title: "Bridge Server",
-    content: <BridgeServer/>,
+    content: <BridgeServer />,
+  },
+  vault: {
+    title: "Vault",
+    content: <Vault />,
   },
   externalPlatforms: {
     title: "External Platforms",
-    content: <ExternalPlatforms/>,
+    content: <ExternalPlatforms />,
   },
-   externalBridges: {
+  externalBridges: {
     title: "External Bridges",
-    content: <ExternalBridge/>,
+    content: <ExternalBridge />,
   },
 };
 
@@ -116,7 +121,7 @@ const edges = [
   { id: "e5-8", source: "5", target: "8", animated: true },
 ];
 
-const Publish = () => {
+const StoreToken = () => {
   const [selectedNode, setSelectedNode] = useState(null);
 
   const handleNodeClick = (_, node) => {
@@ -147,7 +152,7 @@ const Publish = () => {
           }}
           className="header"
         >
-          Publish
+          Store Token
         </Typography>
         <Typography variant="h6" sx={{ py: { md: 8, xs: 4 } }} wrap>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -218,4 +223,4 @@ const Publish = () => {
   );
 };
 
-export default Publish;
+export default StoreToken;
