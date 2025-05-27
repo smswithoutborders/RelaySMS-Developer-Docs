@@ -14,14 +14,14 @@ import {
   LeftOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import ExternalPlatforms from "../Documentation/platforms/index.mdx";
-import ExternalBridge from "../Documentation/platforms/bridgePlatforms.mdx";
-import Client from "../Documentation/client/index.mdx";
-import GatewayClient from "../Documentation/gatewayClient/index.mdx";
-import GatewayServer from "../Documentation/gatewayServer/index.mdx";
-import Publisher from "../Documentation/publisher/index.mdx";
-import BridgeServer from "../Documentation/bridgeServer/index.mdx";
-import Vault from "../Documentation/vault/index.mdx";
+import ExternalPlatforms from "../dataFlow/publishContent/platforms.mdx";
+import ExternalBridge from "../dataFlow/publishContent/bridgePlatforms.mdx"
+import Client from "../dataFlow/publishContent/client.mdx";
+import GatewayClient from "../dataFlow/publishContent/gatewayClient.mdx";
+import GatewayServer from "../dataFlow/publishContent/gatewayServer.mdx";
+import Publisher from "../dataFlow/publishContent/publisher.mdx";
+import BridgeServer from "../dataFlow/publishContent/bridgeServer.mdx";
+import Vault from "../dataFlow/publishContent/vault.mdx";
 
 const nodeDescriptions = {
   client: {
@@ -188,7 +188,7 @@ const PublishContent = () => {
           mx: { xs: 2, md: 15, sm: 10, lg: 25 },
         }}
       >
-        <Box sx={{ height: 300, borderRadius: 2, border: "1px solid #ccc" }}>
+        <Box sx={{ height: 300, borderRadius: 2 }}>
           <ReactFlow
             nodes={nodes}
             edges={edges}

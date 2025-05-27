@@ -1,124 +1,70 @@
 import React, { useState } from "react";
-import { Box, Typography, IconButton, Drawer, Grid } from "@mui/material";
+import {
+  Box,
+  Typography,
+  IconButton,
+  Drawer,
+  Grid,
+  Button,
+} from "@mui/material";
 import "reactflow/dist/style.css";
 import ReactFlow, { Background, Controls, MiniMap } from "reactflow";
-import { CloseCircleOutlined } from "@ant-design/icons";
-import ExternalPlatforms from "../Documentation/platforms/index.mdx";
-import ExternalBridge from "../Documentation/platforms/bridgePlatforms.mdx";
-import Client from "../Documentation/client/index.mdx";
-import GatewayClient from "../Documentation/gatewayClient/index.mdx";
-import GatewayServer from "../Documentation/gatewayServer/index.mdx";
-import Publisher from "../Documentation/publisher/index.mdx";
-import BridgeServer from "../Documentation/bridgeServer/index.mdx";
-import Vault from "../Documentation/vault/index.mdx";
+import {
+  CloseCircleOutlined,
+  LeftOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
+import Publisher from "../dataFlow/telemetry/publisher.mdx";
+import Vault from "../dataFlow/telemetry/vault.mdx";
+import TelemetryAggregator from "../dataFlow/telemetry/telemetryAggregator.mdx";
 
 const nodeDescriptions = {
-  client: {
-    title: "Clients (Apps)",
-    content: <Client />,
-  },
-  gatewayClient: {
-    title: "Gateway Client",
-    content: <GatewayClient />,
-  },
-  gatewayServer: {
-    title: "Gateway Server",
-    content: <GatewayServer />,
+  vault: {
+    title: "Vault",
+    content: <Vault />,
+    id: "vault",
   },
   Publisher: {
     title: "Publisher",
     content: <Publisher />,
+    id: "publisher",
   },
-  bridgeServer: {
-    title: "Bridge Server",
-    content: <BridgeServer />,
-  },
-  vault: {
-    title: "Vault",
-    content: <Vault />,
-  },
-  externalPlatforms: {
-    title: "External Platforms",
-    content: <ExternalPlatforms />,
-  },
-  externalBridges: {
-    title: "External Bridges",
-    content: <ExternalBridge />,
+  aggregator: {
+    title: "Telemetry Aggregator",
+    content: <TelemetryAggregator />,
+    id: "aggregator",
   },
 };
 
 const nodes = [
   {
-    id: "1",
-    position: { x: 0, y: 100 },
-    data: { label: "Client (Apps)" },
-    type: "client",
-  },
-  {
-    id: "2",
-    position: { x: 200, y: 100 },
-    data: { label: "Gateway Client" },
-    type: "gatewayClient",
-  },
-  {
-    id: "3",
-    position: { x: 400, y: 100 },
-    data: { label: "Gateway Server" },
-    type: "gatewayServer",
-  },
-  {
-    id: "4",
-    position: { x: 600, y: 50 },
-    data: { label: "Publisher" },
-    type: "publisher",
-  },
-  {
-    id: "5",
-    position: { x: 600, y: 150 },
-    data: { label: "Bridge Server" },
-    type: "bridgeServer",
-  },
-  {
-    id: "6",
-    position: { x: 800, y: 100 },
+    id: "vault",
+    position: { x: 200, y: 50 },
     data: { label: "Vault" },
     type: "vault",
   },
   {
-    id: "7",
-    position: { x: 1000, y: 50 },
-    data: { label: "External Platforms\n(Gmail etc.)" },
-    type: "externalPlatforms",
+    id: "publisher",
+    position: { x: 400, y: 50 },
+    data: { label: "Publisher" },
+    type: "publisher",
   },
   {
-    id: "8",
-    position: { x: 1000, y: 150 },
-    data: { label: "External Bridges\n(Email Aliases etc.)" },
-    type: "externalBridges",
+    id: "aggregator",
+    position: { x: 300, y: 200 },
+    data: { label: "Telemetry Aggregator" },
+    type: "aggregator", 
   },
 ];
 
 const edges = [
-  { id: "e1-2", source: "1", target: "2", animated: true },
-  { id: "e2-3", source: "2", target: "3", animated: true },
-  { id: "e3-4", source: "3", target: "4", animated: true },
-  { id: "e3-5", source: "3", target: "5", animated: true },
+  { id: "e-vault-agg", source: "vault", target: "aggregator", animated: true },
   {
-    id: "e4-6",
-    source: "4",
-    target: "6",
+    id: "e-publisher-agg",
+    source: "publisher",
+    target: "aggregator",
     animated: true,
-    label: "Verify Token",
   },
-  {
-    id: "e5-6",
-    source: "5",
-    target: "6",
-    animated: true,
-    label: "Verify Token",
-  },
-  { id: "e4-7", source: "4", target: "7", animated: true },
-  { id: "e5-8", source: "5", target: "8", animated: true },
 ];
 
 const Telemetry = () => {
@@ -155,10 +101,12 @@ const Telemetry = () => {
           Telemetry
         </Typography>
         <Typography variant="h6" sx={{ py: { md: 8, xs: 4 } }} wrap>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+          RelaySMS Telemetry provides a comprehensive overview of the RelaySMS
+          usage and performance across various components. It includes detailed
+          information about the clients, publishers, gateways clients, and
+          vaults involved in the RelaySMS ecosystem. This telemetry data is
+          crucial for monitoring system health, diagnosing issues, and
+          optimizing performance.
         </Typography>
       </Box>
       {/*  */}
@@ -169,11 +117,11 @@ const Telemetry = () => {
           my: "auto",
           alignContent: "center",
           textAlign: "center",
-          mb: { xs: 6, md: 15, sm: 10, lg: 25 },
+          mb: { xs: 6, md: 15, sm: 10, lg: 8 },
           mx: { xs: 2, md: 15, sm: 10, lg: 25 },
         }}
       >
-        <Box sx={{ height: 300, borderRadius: 2, border: "1px solid #ccc" }}>
+        <Box sx={{ height: 300, borderRadius: 2 }}>
           <ReactFlow
             nodes={nodes}
             edges={edges}
@@ -188,6 +136,7 @@ const Telemetry = () => {
           />
         </Box>
       </Box>
+
       <Drawer
         anchor="right"
         open={!!selectedNode}
@@ -219,6 +168,49 @@ const Telemetry = () => {
           )}
         </Box>
       </Drawer>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          mx: { xs: 2, md: 15, sm: 10, lg: 25 },
+          my: 5,
+        }}
+      >
+        <Button
+          variant="text"
+          component="a"
+          href="/publish-content"
+          startIcon={<LeftOutlined />}
+          sx={{
+            textDecoration: "underline",
+            fontWeight: "bold",
+            fontSize: "1rem",
+            color: "primary.main",
+            "&:hover": {
+              textDecoration: "none",
+            },
+          }}
+        >
+          Back to Publish Content
+        </Button>
+        <Button
+          variant="text"
+          component="a"
+          href="/reliability-test"
+          endIcon={<RightOutlined />}
+          sx={{
+            textDecoration: "underline",
+            fontWeight: "bold",
+            fontSize: "1rem",
+            color: "primary.main",
+            "&:hover": {
+              textDecoration: "none",
+            },
+          }}
+        >
+          Continue to Reliability Test
+        </Button>
+      </Box>
     </Box>
   );
 };
