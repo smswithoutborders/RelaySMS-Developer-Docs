@@ -6,12 +6,13 @@ export const getDesignTokens = (mode) => ({
     mode,
     primary: {
       main: "#FF9E43",
+      secondary: "#",
     },
     ...(mode === "light"
       ? {
           background: {
-            default: "#ffffff",
-            paper: "#fff",
+            default: "#FFF7F0",
+            paper: "#ffffff",
           },
         }
       : {

@@ -8,7 +8,8 @@ const ButtonContained = ({ text, linkTo, onClick, fontSize }) => {
       fullWidth
       variant="contained"
       size="large"
-      sx={{ p: 2, textTransform: "none", fontSize: {fontSize}, fontWeight: "bold" }}
+      className="header"
+      sx={{ p: 2, textTransform: "none", fontSize: {fontSize} }}
     >
       {text}
     </Button>

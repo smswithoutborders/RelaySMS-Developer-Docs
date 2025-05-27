@@ -71,7 +71,7 @@ const Main = () => {
           mx: { xs: 2, md: 15, sm: 10, lg: 25 },
         }}
       >
-        <Grid container spacing={4}>
+        <Grid container spacing={3}>
           <Grid size={{ md: 4, xs: 6 }}>
             <ButtonContained
               text="Client"
@@ -93,19 +93,19 @@ const Main = () => {
           <Grid size={{ md: 4, xs: 6 }}>
             <ButtonContained
               text="Gateway Client"
-              onClick={() => handleDrawerOpen("Gateway Client")}
+              onClick={() => handleDrawerOpen("GatewayClient")}
             />
           </Grid>
           <Grid size={{ md: 4, xs: 6 }}>
             <ButtonContained
               text="Gateway Server"
-              onClick={() => handleDrawerOpen("Gateway Server")}
+              onClick={() => handleDrawerOpen("GatewayServer")}
             />
           </Grid>
           <Grid size={{ md: 4, xs: 6 }}>
             <ButtonContained
               text="Bridge Server"
-              onClick={() => handleDrawerOpen("Bridge Server")}
+              onClick={() => handleDrawerOpen("BridgeServer")}
             />
           </Grid>
         </Grid>

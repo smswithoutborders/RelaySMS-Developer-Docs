@@ -13,6 +13,12 @@ body {
   background-color: #FFF7F0 ;
 }
 
-.header {
+.header, h1, h2, h3, h4 {
   font-family: 'Unbounded', sans-serif !important;
+}
+
+a {
+  color: #2b84d8;
+  text-decoration: none;
+  font-weight: 400;
 }
