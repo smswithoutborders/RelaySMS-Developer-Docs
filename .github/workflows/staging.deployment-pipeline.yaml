@@ -19,18 +19,13 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Enable Corepack and Use Latest Yarn
-        run: |
-          corepack enable
-          corepack prepare yarn@stable --activate
-
       - name: Install dependencies
         run: |
-          yarn install
+          npm install
 
       - name: Build project
         run: |
-          yarn build
+          npm run build
 
       - name: Prepare build for deployment
         run: |
