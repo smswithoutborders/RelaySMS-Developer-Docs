@@ -51,8 +51,8 @@ const Main = () => {
           }}
           className="header"
         >
-          RelaySMS System <br />
-          Atlas
+          RelaySMS Developer <br />
+          Documentation
         </Typography>
         <Typography variant="h6" sx={{ py: { md: 8, xs: 4 } }} wrap>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
