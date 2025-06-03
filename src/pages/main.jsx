@@ -118,7 +118,7 @@ const Main = () => {
       >
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography variant="h5" fontWeight="bold">
-            Documentation
+            Details
           </Typography>
           <IconButton onClick={handleDrawerClose}>
             <span style={{ fontSize: 24 }}>&times;</span>
