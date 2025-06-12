@@ -15,8 +15,8 @@ import { Link } from "react-router-dom";
 
 const navLinks = [
   { to: "/", label: "Atlas" },
-  { to: "/", label: "Instances" },
-  { to: "/", label: "Contributing" },
+  { to: "/#instances", label: "Instances" },
+  { to: "/contribution", label: "Contributing" },
 ];
 
 const NavComp = ({ toggleMode, mode }) => {
@@ -28,7 +28,7 @@ const NavComp = ({ toggleMode, mode }) => {
 
   return (
     <Box
-      maxWidth="lg"
+      maxWidth="1600px"
       mx="auto"
       component="nav"
       sx={{
@@ -58,9 +58,10 @@ const NavComp = ({ toggleMode, mode }) => {
         {navLinks.map((link) => (
           <Typography
             key={link.label}
-            component={Link}
+            component={link.to.startsWith("/#") ? "a" : Link}
+            href={link.to.startsWith("/#") ? link.to : undefined}
+            to={!link.to.startsWith("/#") ? link.to : undefined}
             sx={{ textDecoration: "none", color: "inherit" }}
-            to={link.to}
             variant="subtitle1"
           >
             {link.label}
@@ -83,8 +84,9 @@ const NavComp = ({ toggleMode, mode }) => {
           {navLinks.map((link) => (
             <MenuItem
               key={link.label}
-              component={Link}
-              to={link.to}
+              component={link.to.startsWith("/#") ? "a" : Link}
+              href={link.to.startsWith("/#") ? link.to : undefined}
+              to={!link.to.startsWith("/#") ? link.to : undefined}
               onClick={handleMenuClose}
             >
               {link.label}

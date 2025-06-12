@@ -1,23 +1,55 @@
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+## 🧩 Publisher
 
-### . Android
+**Publisher** is the middleware layer that connects the **Gateway Server** to the **RelaySMS (SMSWithoutBorders) backend**.  
+It plays a critical role in securely relaying and translating user intentions—sent via SMS—into valid, authenticated requests to online platforms like Gmail, Twitter, and Telegram.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+---
 
-**Download:**  
-[Github](https://play.google.com/store/apps/details?id=com.relaysms.android&hl=en&gl=US)  
-[PlayStore](https://play.google.com/store/apps/details?id=com.relaysms.android&hl=en&gl=US)
+### 🔄 What Does Publisher Do?
 
-**Contribute:**  
-[Github](https://play.google.com/store/apps/details?id=com.relaysms.android&hl=en&gl=US)
+The Publisher acts as a **secure interpreter** and **executor**:
 
-### . IOS
+1. ✅ Receives SMS-based command payloads from the Gateway Server
+2. 🤝 Performs a secure handshake with the backend to validate the request
+3. 🔐 Decrypts the OAuth2 tokens stored in encrypted Vaults
+4. 📡 Uses the decrypted tokens to make authorized API calls on behalf of the user
+5. 📥 Returns the response to be sent back via SMS through the gateway
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+This makes it possible for users with **no internet connection** to interact with cloud-based platforms **using only SMS**.
 
-**Download:**  
-[Github](https://play.google.com/store/apps/details?id=com.relaysms.android&hl=en&gl=US)  
-[PlayStore](https://play.google.com/store/apps/details?id=com.relaysms.android&hl=en&gl=US)
+---
 
-**Contribute:**  
-[Github](https://play.google.com/store/apps/details?id=com.relaysms.android&hl=en&gl=US)
+### 🚀 Use Case: Publishing via SMS
+
+A user without internet sends an SMS formatted command to a gateway client.  
+That SMS reaches the Publisher, which:
+
+- Authenticates the user via token signature
+- Decrypts their token from a secure vault
+- Sends the command (e.g., "Tweet this text" or "Send Gmail") to the respective platform
+- Retrieves the response (e.g., “Tweet posted!”)
+- Sends it back to the user via SMS
+
+All of this happens within seconds, transparently and securely.
+
+---
+
+### 🔐 Security & Trust
+
+Publisher enforces:
+
+- **Vault-Based Token Storage**: OAuth2 tokens are never exposed; they are encrypted at rest.
+- **Request Signing & Verification**: All commands are signed and validated to prevent spoofing.
+- **Least Privilege**: Requests are made only with the minimum required scopes.
+
+---
+
+### 📚 Learn More
+
+- 🧠 [How the Publisher Works](https://github.com/smswithoutborders/RelaySMS-Publisher/blob/main/docs/grpc.md)
+- 🔐 [Content and Payload Specification](https://github.com/smswithoutborders/RelaySMS-Publisher/blob/main/docs/grpc.md)
+- ⚙️ [REST API Documentation](https://publisher.smswithoutborders.com/docs)
+
+---
+
+> ✨ **Fun Fact:** With RelaySMS Publisher, users can post to Twitter or send a Gmail just by sending an SMS—no apps, no data required.

@@ -19,6 +19,7 @@ import Overview from "./overview";
 const Main = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [drawerContent, setDrawerContent] = React.useState(null);
+  const [drawerTitle, setDrawerTitle] = React.useState(""); // NEW
 
   const mdxComponents = {
     Client: <Client />,
@@ -31,12 +32,14 @@ const Main = () => {
 
   const handleDrawerOpen = (key) => {
     setDrawerContent(mdxComponents[key]);
+    setDrawerTitle(key); // NEW
     setDrawerOpen(true);
   };
 
   const handleDrawerClose = () => {
     setDrawerOpen(false);
     setDrawerContent(null);
+    setDrawerTitle(""); // NEW
   };
 
   return (
@@ -83,6 +86,7 @@ const Main = () => {
         </Box>
       </Box>
       <Box
+        id="instances"
         sx={{
           pt: { xs: 4, sm: 6, md: 30 },
           my: 2,
@@ -139,7 +143,7 @@ const Main = () => {
       >
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography variant="h5" fontWeight="bold">
-            Details
+            {drawerTitle || "Details"}
           </Typography>
           <IconButton onClick={handleDrawerClose}>
             <span style={{ fontSize: 24 }}>&times;</span>

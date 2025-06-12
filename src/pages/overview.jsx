@@ -185,7 +185,7 @@ const Overview = ({ handleDrawerOpen }) => (
   >
     <Box
       sx={{
-        width: { xs: "900px", sm: "100%", md: "100%" }, // min width for mobile scroll
+        width: { xs: "900px", sm: "100%", md: "100%" },
         minWidth: { xs: "900px", sm: "100%", md: "100%" },
         height: { xs: 400, sm: 500, md: 500 },
         mt: 2,
