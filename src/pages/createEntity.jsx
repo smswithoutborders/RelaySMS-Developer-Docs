@@ -15,7 +15,12 @@ import {
 } from "@mui/material";
 import "reactflow/dist/style.css";
 import ReactFlow from "reactflow";
-import { ArrowRightOutlined, CloseCircleOutlined, CopyOutlined, RightOutlined } from "@ant-design/icons";
+import {
+  ArrowRightOutlined,
+  CloseCircleOutlined,
+  CopyOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
 import Client from "../dataFlow/createEntity/client.mdx";
 import Vault from "../dataFlow/createEntity/vault.mdx";
 import { Link } from "react-router-dom";
@@ -37,12 +42,16 @@ const nodes = [
     position: { x: 100, y: 200 },
     data: { label: "Client (Apps)" },
     type: "client",
+    sourcePosition: "top",
+    targetPosition: "bottom",
   },
   {
     id: "vault",
     position: { x: 400, y: 200 },
     data: { label: "Vault" },
     type: "vault",
+    sourcePosition: "bottom",
+    targetPosition: "top",
   },
 ];
 
@@ -53,7 +62,8 @@ const edges = [
     target: "vault",
     animated: true,
     type: "step",
-    markerEnd: { type: "arrowclosed" },
+    markerEnd: { type: "arrowclosed", width: 20, height: 20 },
+    label: "Request Payload",
   },
   {
     id: "response",
@@ -61,8 +71,9 @@ const edges = [
     target: "client",
     animated: true,
     style: { stroke: "#1976d2" },
-    type: "offset",
-    markerEnd: { type: "arrowclosed", color: "#1976d2" },
+    type: "step",
+    markerEnd: { type: "arrowclosed", width: 20, height: 20, color: "#1976d2" },
+    label: "Response Payload",
   },
 ];
 
@@ -288,26 +299,32 @@ const CreateEntity = () => {
         onClose={() => setSnackbarOpen(false)}
         message="Copied to clipboard"
       />
-     <Box sx={{ display: "flex", justifyContent: "flex-end", mx: { xs: 2, md: 15, sm: 10, lg: 25 }, mb: 10 }}>
-  <Button
-    variant="text"
-    component="a"
-    href="/authenticate-entity"
-    endIcon={<RightOutlined />}
-    sx={{
-      textDecoration: "underline",
-      fontWeight: "bold",
-      fontSize: "1rem",
-      color: "primary.main",
-      '&:hover': {
-        textDecoration: "none"
-      }
-    }}
-  >
-    Continue to Authentication
-  </Button>
-</Box>
-
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          mx: { xs: 2, md: 15, sm: 10, lg: 25 },
+          mb: 10,
+        }}
+      >
+        <Button
+          variant="text"
+          component="a"
+          href="/authenticate-entity"
+          endIcon={<RightOutlined />}
+          sx={{
+            textDecoration: "underline",
+            fontWeight: "bold",
+            fontSize: "1rem",
+            color: "primary.main",
+            "&:hover": {
+              textDecoration: "none",
+            },
+          }}
+        >
+          Continue to Authentication
+        </Button>
+      </Box>
     </Box>
   );
 };
