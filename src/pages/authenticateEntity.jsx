@@ -305,7 +305,7 @@ const AuthenticateEntity = () => {
           sx={{
             textDecoration: "underline",
             fontWeight: "bold",
-            fontSize: "1rem",
+            fontSize: { md: "1rem", xs: "0.8rem" },
             color: "primary.main",
             "&:hover": {
               textDecoration: "none",
@@ -322,7 +322,7 @@ const AuthenticateEntity = () => {
           sx={{
             textDecoration: "underline",
             fontWeight: "bold",
-            fontSize: "1rem",
+            fontSize: { md: "1rem", xs: "0.8rem" },
             color: "primary.main",
             "&:hover": {
               textDecoration: "none",

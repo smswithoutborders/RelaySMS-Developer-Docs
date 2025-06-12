@@ -18,7 +18,7 @@ import { createAppTheme } from "./components/theme";
 function App() {
   const [mode, setMode] = useState(() => {
     const storedMode = localStorage.getItem("themeMode");
-    return storedMode || "dark";
+    return storedMode || "light";
   });
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function App() {
   const theme = useMemo(() => createAppTheme(mode), [mode]);
 
   const toggleMode = () => {
-    setMode((prevMode) => (prevMode === "dark" ? "light" : "dark"));
+    setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
   };
 
   return (

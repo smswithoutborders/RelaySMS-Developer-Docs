@@ -174,20 +174,23 @@ const nodeClickMap = {
 };
 
 const Overview = ({ handleDrawerOpen }) => (
-  <Box sx={{ height: 540 }}>
-    <Typography variant="h4" sx={{ mb: 1, fontWeight: "bold" }}>
-      System Architecture Overview
-    </Typography>
-    <Typography variant="body2" sx={{ mb: 2 }}>
-      The diagram below illustrates the flow of messages and data between the
-      main components of the RelaySMS, from client apps through gateways,
-      servers, and external services.
-    </Typography>
-    <Alert severity="info">
-      Tip: Click on a node in the diagram to view more information about that
-      component.
-    </Alert>
-    <Box sx={{ height: 500 }}>
+  <Box
+    sx={{
+      width: "100%",
+      maxWidth: "100vw",
+      overflowX: "auto",
+      pb: 2,
+      my: 5,
+    }}
+  >
+    <Box
+      sx={{
+        width: { xs: "900px", sm: "100%", md: "100%" }, // min width for mobile scroll
+        minWidth: { xs: "900px", sm: "100%", md: "100%" },
+        height: { xs: 400, sm: 500, md: 500 },
+        mt: 2,
+      }}
+    >
       <ReactFlow
         nodes={nodes}
         edges={edges}

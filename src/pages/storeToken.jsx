@@ -130,7 +130,8 @@ const StoreToken = () => {
         </Typography>
         <Typography variant="h6" sx={{ py: { md: 8, xs: 4 } }}>
           This step involves storing tokens securely for the authenticated
-          entity. That is giving RelaySMS access to publish messages on your behalf.
+          entity. That is giving RelaySMS access to publish messages on your
+          behalf.
         </Typography>
       </Box>
 
@@ -253,7 +254,7 @@ const StoreToken = () => {
           sx={{
             textDecoration: "underline",
             fontWeight: "bold",
-            fontSize: "1rem",
+            fontSize: { md: "1rem", xs: "0.8rem" },
             color: "primary.main",
             "&:hover": {
               textDecoration: "none",
@@ -270,7 +271,7 @@ const StoreToken = () => {
           sx={{
             textDecoration: "underline",
             fontWeight: "bold",
-            fontSize: "1rem",
+            fontSize: { md: "1rem", xs: "0.8rem" },
             color: "primary.main",
             "&:hover": {
               textDecoration: "none",

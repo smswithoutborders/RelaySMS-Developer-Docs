@@ -53,7 +53,7 @@ const nodes = [
     id: "aggregator",
     position: { x: 300, y: 200 },
     data: { label: "Telemetry Aggregator" },
-    type: "aggregator", 
+    type: "aggregator",
   },
 ];
 
@@ -184,7 +184,7 @@ const Telemetry = () => {
           sx={{
             textDecoration: "underline",
             fontWeight: "bold",
-            fontSize: "1rem",
+            fontSize: { md: "1rem", xs: "0.8rem" },
             color: "primary.main",
             "&:hover": {
               textDecoration: "none",
@@ -201,7 +201,7 @@ const Telemetry = () => {
           sx={{
             textDecoration: "underline",
             fontWeight: "bold",
-            fontSize: "1rem",
+            fontSize: { md: "1rem", xs: "0.8rem" },
             color: "primary.main",
             "&:hover": {
               textDecoration: "none",

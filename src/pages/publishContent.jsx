@@ -15,13 +15,14 @@ import {
   RightOutlined,
 } from "@ant-design/icons";
 import ExternalPlatforms from "../dataFlow/publishContent/platforms.mdx";
-import ExternalBridge from "../dataFlow/publishContent/bridgePlatforms.mdx"
+import ExternalBridge from "../dataFlow/publishContent/bridgePlatforms.mdx";
 import Client from "../dataFlow/publishContent/client.mdx";
 import GatewayClient from "../dataFlow/publishContent/gatewayClient.mdx";
 import GatewayServer from "../dataFlow/publishContent/gatewayServer.mdx";
 import Publisher from "../dataFlow/publishContent/publisher.mdx";
 import BridgeServer from "../dataFlow/publishContent/bridgeServer.mdx";
 import Vault from "../dataFlow/publishContent/vault.mdx";
+import Overview from "./overview";
 
 const nodeDescriptions = {
   client: {
@@ -58,86 +59,8 @@ const nodeDescriptions = {
   },
 };
 
-const nodes = [
-  {
-    id: "1",
-    position: { x: 0, y: 100 },
-    data: { label: "Client (Apps)" },
-    type: "client",
-  },
-  {
-    id: "2",
-    position: { x: 200, y: 100 },
-    data: { label: "Gateway Client" },
-    type: "gatewayClient",
-  },
-  {
-    id: "3",
-    position: { x: 400, y: 100 },
-    data: { label: "Gateway Server" },
-    type: "gatewayServer",
-  },
-  {
-    id: "4",
-    position: { x: 600, y: 50 },
-    data: { label: "Publisher" },
-    type: "publisher",
-  },
-  {
-    id: "5",
-    position: { x: 600, y: 150 },
-    data: { label: "Bridge Server" },
-    type: "bridgeServer",
-  },
-  {
-    id: "6",
-    position: { x: 800, y: 100 },
-    data: { label: "Vault" },
-    type: "vault",
-  },
-  {
-    id: "7",
-    position: { x: 1000, y: 50 },
-    data: { label: "External Platforms\n(Gmail etc.)" },
-    type: "externalPlatforms",
-  },
-  {
-    id: "8",
-    position: { x: 1000, y: 150 },
-    data: { label: "External Bridges\n(Email Aliases etc.)" },
-    type: "externalBridges",
-  },
-];
-
-const edges = [
-  { id: "e1-2", source: "1", target: "2", animated: true },
-  { id: "e2-3", source: "2", target: "3", animated: true },
-  { id: "e3-4", source: "3", target: "4", animated: true },
-  { id: "e3-5", source: "3", target: "5", animated: true },
-  {
-    id: "e4-6",
-    source: "4",
-    target: "6",
-    animated: true,
-    label: "Verify Token",
-  },
-  {
-    id: "e5-6",
-    source: "5",
-    target: "6",
-    animated: true,
-    label: "Verify Token",
-  },
-  { id: "e4-7", source: "4", target: "7", animated: true },
-  { id: "e5-8", source: "5", target: "8", animated: true },
-];
-
 const PublishContent = () => {
   const [selectedNode, setSelectedNode] = useState(null);
-
-  const handleNodeClick = (_, node) => {
-    setSelectedNode(node);
-  };
 
   const handleCloseDrawer = () => {
     setSelectedNode(null);
@@ -188,26 +111,15 @@ const PublishContent = () => {
           mx: { xs: 2, md: 15, sm: 10, lg: 25 },
         }}
       >
-        <Box sx={{ height: 300, borderRadius: 2 }}>
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            fitView
-            onNodeClick={handleNodeClick}
-            nodesDraggable={false}
-            nodesConnectable={false}
-            elementsSelectable={false}
-            zoomOnScroll={false}
-            panOnDrag={false}
-            panOnScroll={false}
-          />
+        <Box>
+          <Overview />
         </Box>
       </Box>
       <Box
         sx={{
           mx: { xs: 2, md: 15, sm: 10, lg: 25 },
           my: 3,
-          mb: 10
+          mb: 10,
         }}
       >
         <Typography variant="h6">Sample payload.json</Typography>
@@ -268,7 +180,7 @@ const PublishContent = () => {
           sx={{
             textDecoration: "underline",
             fontWeight: "bold",
-            fontSize: "1rem",
+            fontSize: { md: "1rem", xs: "0.8rem" },
             color: "primary.main",
             "&:hover": {
               textDecoration: "none",
@@ -285,7 +197,7 @@ const PublishContent = () => {
           sx={{
             textDecoration: "underline",
             fontWeight: "bold",
-            fontSize: "1rem",
+            fontSize: { md: "1rem", xs: "0.8rem" },
             color: "primary.main",
             "&:hover": {
               textDecoration: "none",

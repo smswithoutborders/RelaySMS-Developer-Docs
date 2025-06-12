@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Grid, Typography, IconButton, Drawer } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Typography,
+  IconButton,
+  Drawer,
+  Alert,
+} from "@mui/material";
 import { ButtonContained, ButtonOutline } from "../components";
 import Client from "../documentations/client/index.mdx";
 import GatewayClient from "../documentations/gatewayClient/index.mdx";
@@ -48,7 +55,7 @@ const Main = () => {
           variant="h1"
           sx={{
             fontWeight: "bold",
-            fontSize: { xs: "3rem", sm: "4rem", md: "6rem" },
+            fontSize: { xs: "2.5rem", sm: "4rem", md: "6rem" },
             mb: 5,
           }}
           className="header"
@@ -59,7 +66,19 @@ const Main = () => {
 
         <hr />
 
-        <Box sx={{ my: 5 }}>
+        <Box sx={{ pt: 4 }}>
+          <Typography variant="h4" sx={{ mb: 1, fontWeight: "bold" }}>
+            System Architecture Overview
+          </Typography>
+          <Typography variant="body2" sx={{ mb: 2 }}>
+            The diagram below illustrates the flow of messages and data between
+            the main components of the RelaySMS, from client apps through
+            gateways, servers, and external services.
+          </Typography>
+          <Alert severity="info">
+            Tip: Click on a node in the diagram to view more information about
+            that component.
+          </Alert>
           <Overview handleDrawerOpen={handleDrawerOpen} />
         </Box>
       </Box>
@@ -80,11 +99,13 @@ const Main = () => {
           }}
           className="header"
         >
-          RelaySMS Architecture
+          Data Flow Guides
         </Typography>
-        <Typography variant="h6" sx={{ py: { md: 8, xs: 4 } }} wrap>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        <Typography variant="body1" sx={{ py: { md: 8, xs: 4 } }} wrap>
+          These guides will help you understand how to use the RelaySMS system
+          effectively. Each guide provides step-by-step instructions and code{" "}
+          <br />
+          examples to help you get started quickly.
         </Typography>
         <Grid container spacing={2}>
           <Grid size={{ md: 4, xs: 6 }}>
