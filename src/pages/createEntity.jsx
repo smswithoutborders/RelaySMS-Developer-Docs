@@ -227,8 +227,13 @@ const CreateEntity = () => {
       </Box>
 
       {/* Drawer */}
-      <Drawer anchor="right" open={!!selectedNode} onClose={handleCloseDrawer}>
-        <Box sx={{ width: 400, p: 3 }}>
+      <Drawer
+        PaperProps={{ sx: { width: { xs: "100%", sm: 400, lg: 600 }, p: 3 } }}
+        anchor="right"
+        open={!!selectedNode}
+        onClose={handleCloseDrawer}
+      >
+        <Box>
           <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
             <Typography variant="h6">
               {selectedNode && nodeDescriptions[selectedNode.type]?.title}
@@ -315,7 +320,7 @@ const CreateEntity = () => {
           sx={{
             textDecoration: "underline",
             fontWeight: "bold",
-            fontSize: "1rem",
+            fontSize: { md: "1rem", xs: "0.8rem" },
             color: "primary.main",
             "&:hover": {
               textDecoration: "none",

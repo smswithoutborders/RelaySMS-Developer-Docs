@@ -213,20 +213,37 @@ const ReliabilityTest = () => {
         <Alert severity="info">
           Tip: Click on the payload in the diagram to see the payload structure.
         </Alert>
-        <Box sx={{ height: 300, borderRadius: 2 }}>
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            fitView
-            onNodeClick={handleNodeClick}
-            onEdgeClick={handleEdgeClick}
-            nodesDraggable={false}
-            nodesConnectable={false}
-            elementsSelectable={false}
-            zoomOnScroll={false}
-            panOnDrag={false}
-            panOnScroll={false}
-          />
+        <Box
+          sx={{
+            width: "100%",
+            maxWidth: "100vw",
+            overflowX: "auto",
+            pb: 2,
+            my: 5,
+          }}
+        >
+          <Box
+            sx={{
+              width: { xs: "900px", sm: "100%", md: "100%" },
+              minWidth: { xs: "900px", sm: "100%", md: "100%" },
+              height: { xs: 400, sm: 500, md: 500 },
+              mt: 2,
+            }}
+          >
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              fitView
+              onNodeClick={handleNodeClick}
+              onEdgeClick={handleEdgeClick}
+              nodesDraggable={false}
+              nodesConnectable={false}
+              elementsSelectable={false}
+              zoomOnScroll={false}
+              panOnDrag={false}
+              panOnScroll={false}
+            />
+          </Box>
         </Box>
       </Box>
 
@@ -242,20 +259,37 @@ const ReliabilityTest = () => {
           Once the test is started, send the test payload to the gateway client
           using the regular <a href="/publish-content">publish </a> flow.
         </Typography>
-        <Box sx={{ height: 300, borderRadius: 2 }}>
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            fitView
-            onNodeClick={handleNodeClick}
-            onEdgeClick={handleEdgeClick}
-            nodesDraggable={false}
-            nodesConnectable={false}
-            elementsSelectable={false}
-            zoomOnScroll={false}
-            panOnDrag={false}
-            panOnScroll={false}
-          />
+        <Box
+          sx={{
+            width: "100%",
+            maxWidth: "100vw",
+            overflowX: "auto",
+            pb: 2,
+            my: 5,
+          }}
+        >
+          <Box
+            sx={{
+              width: { xs: "900px", sm: "100%", md: "100%" },
+              minWidth: { xs: "900px", sm: "100%", md: "100%" },
+              height: { xs: 400, sm: 500, md: 500 },
+              mt: 2,
+            }}
+          >
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              fitView
+              onNodeClick={handleNodeClick}
+              onEdgeClick={handleEdgeClick}
+              nodesDraggable={false}
+              nodesConnectable={false}
+              elementsSelectable={false}
+              zoomOnScroll={false}
+              panOnDrag={false}
+              panOnScroll={false}
+            />
+          </Box>
         </Box>
       </Box>
 
@@ -364,7 +398,7 @@ const ReliabilityTest = () => {
           sx={{
             textDecoration: "underline",
             fontWeight: "bold",
-            fontSize: "1rem",
+            fontSize: { md: "1rem", xs: "0.8rem" },
             color: "primary.main",
             "&:hover": {
               textDecoration: "none",

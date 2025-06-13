@@ -1,23 +1,50 @@
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+## 🌐 Gateway Server
 
-### . Android
+The **Gateway Server** is a core component in the RelaySMS (SMSWithoutBorders) architecture.  
+It acts as the **bridge between SMS messages received by gateway clients** and the **Publisher module**, facilitating secure and real-time communication across the system.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+---
 
-**Download:**  
-[Github](https://play.google.com/store/apps/details?id=com.relaysms.android&hl=en&gl=US)  
-[PlayStore](https://play.google.com/store/apps/details?id=com.relaysms.android&hl=en&gl=US)
+### 🔗 What Does the Gateway Server Do?
 
-**Contribute:**  
-[Github](https://play.google.com/store/apps/details?id=com.relaysms.android&hl=en&gl=US)
+The Gateway Server is responsible for:
 
-### . IOS
+1. 📥 **Receiving inbound SMS messages** from registered gateway clients
+2. 🔄 **Parsing and validating** message payloads (including sender ID, message type, and timestamps)
+3. 🚀 **Forwarding valid requests** to the Publisher for further processing and token-based execution
+4. 📤 **Receiving responses** from the Publisher and queuing them for outbound delivery via SMS
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+It ensures the **synchronization** and **communication handshake** between the physical SMS layer and the digital token-based execution layer.
 
-**Download:**  
-[Github](https://play.google.com/store/apps/details?id=com.relaysms.android&hl=en&gl=US)  
-[PlayStore](https://play.google.com/store/apps/details?id=com.relaysms.android&hl=en&gl=US)
+---
 
-**Contribute:**  
-[Github](https://play.google.com/store/apps/details?id=com.relaysms.android&hl=en&gl=US)
+### 🧠 How It Works
+
+When a user sends an SMS to a RelaySMS gateway client:
+
+1. The message is picked up by the Gateway Server
+2. The Gateway Server validates the payload and performs any initial preprocessing
+3. It then forwards the request to the **Publisher** over a secure channel
+4. After execution, the response is returned to the Gateway Server
+5. The server sends this response back to the user via SMS
+
+All steps are secure, auditable, and optimized for low-latency environments.
+
+---
+
+### 🛠️ Key Features
+
+- 🔐 **Secure Communication** between gateway and publisher
+- 🧾 **Payload Logging** for reliability and traceability
+- 📊 **Load-Aware Routing** to balance requests between multiple publishers (if scaled)
+- 🔁 **Retry Mechanism** for failed SMS deliveries
+
+---
+
+### 📚 Learn More
+
+- 🛤️ [Gateway Server Repo](https://github.com/smswithoutborders/RelaySMS-Gateway-Server)
+
+---
+
+> 📡 **Pro Tip:** Want to self-host? You can deploy your own Gateway Server and connect it to a private or public RelaySMS network.
