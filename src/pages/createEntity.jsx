@@ -195,6 +195,163 @@ const CreateEntity = () => {
             panOnScroll={false}
           />
         </Box>
+
+        {/*  explanation */}
+{/* explanation */}
+<Box sx={{ mt: 6 }}>
+  <Typography variant="h5" gutterBottom>
+    📱 Client Guide: Creating an Entity
+  </Typography>
+  <Typography variant="body1" paragraph>
+    This guide explains how your client app (mobile or CLI) can create an entity in the RelaySMS Vault.
+    An <strong>entity</strong> represents a secure user identity tied to a phone number.
+  </Typography>
+
+  <Typography variant="body1" paragraph>
+    Creating an entity involves:
+  </Typography>
+  <ul>
+    <li>Proving ownership of the phone number</li>
+    <li>Submitting a secure registration payload</li>
+    <li>Receiving keys and a long-lived token for future requests</li>
+  </ul>
+
+  <Divider sx={{ my: 4 }} />
+
+  <Typography variant="h6" gutterBottom>
+    🧩 Step 1: Initiate Entity Creation
+  </Typography>
+  <Typography variant="body1" paragraph>
+    Your app must first initiate the creation request using the user's phone number and public keys.
+  </Typography>
+
+  <Typography variant="subtitle1" gutterBottom>
+    🔐 Required Fields
+  </Typography>
+
+  <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse', mb: 3 }}>
+    <thead>
+      <tr>
+        <th style={{ border: '1px solid #ccc', padding: 8 }}>Field</th>
+        <th style={{ border: '1px solid #ccc', padding: 8 }}>Type</th>
+        <th style={{ border: '1px solid #ccc', padding: 8 }}>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {[
+        ['phone_number', 'string', 'E.164 format, e.g., `+237123456789`'],
+        ['country_code', 'string', 'ISO 3166-1 alpha-2 format, e.g., `CM`'],
+        ['password', 'string', 'Chosen password for the entity'],
+        ['client_publish_pub_key', 'string', 'Base64-encoded X25519 public key for publishing'],
+        ['client_device_id_pub_key', 'string', 'Base64-encoded X25519 public key for device identification'],
+      ].map(([field, type, desc]) => (
+        <tr key={field}>
+          <td style={{ border: '1px solid #ccc', padding: 8 }}>{field}</td>
+          <td style={{ border: '1px solid #ccc', padding: 8 }}>{type}</td>
+          <td style={{ border: '1px solid #ccc', padding: 8 }}>{desc}</td>
+        </tr>
+      ))}
+    </tbody>
+  </Box>
+
+  <Typography variant="subtitle1" gutterBottom>
+    ▶️ Example Payload
+  </Typography>
+  <Box component="pre" sx={{ bgcolor: '#1e1e1e', color: '#fff', p: 2, borderRadius: 2, overflowX: 'auto' }}>
+    {`{
+  "country_code": "CM",
+  "phone_number": "+237123456789",
+  "password": "Password@123",
+  "client_publish_pub_key": "BASE64_X25519_PUB_KEY",
+  "client_device_id_pub_key": "BASE64_X25519_DEVICE_ID_KEY"
+}`}
+  </Box>
+
+  <Typography variant="subtitle1" sx={{ mt: 3 }}>
+    ✅ Expected Response
+  </Typography>
+  <Box component="pre" sx={{ bgcolor: '#1e1e1e', color: '#fff', p: 2, borderRadius: 2 }}>
+    {`{
+  "requiresOwnershipProof": true,
+  "message": "OTP sent successfully. Check your phone for the code.",
+  "nextAttemptTimestamp": 1717323582
+}`}
+  </Box>
+
+  <Alert severity="info" sx={{ mt: 2 }}>
+    📌 If <code>requiresOwnershipProof</code> is true, the user must enter the OTP sent via SMS.
+  </Alert>
+
+  <Typography variant="h6" sx={{ mt: 6 }}>
+    🧾 Step 2: Complete Entity Creation
+  </Typography>
+  <Typography variant="body1" paragraph>
+    Once the user enters the OTP, your app must submit the final entity creation request.
+  </Typography>
+
+  <Typography variant="subtitle1">▶️ Sample Request Payload</Typography>
+  <Box component="pre" sx={{ bgcolor: '#1e1e1e', color: '#fff', p: 2, borderRadius: 2 }}>
+    {`{
+  "country_code": "CM",
+  "phone_number": "+237123456789",
+  "password": "Password@123",
+  "ownership_proof_response": "123456",
+  "client_publish_pub_key": "BASE64_X25519_PUB_KEY",
+  "client_device_id_pub_key": "BASE64_X25519_DEVICE_ID_KEY"
+}`}
+  </Box>
+
+  <Typography variant="subtitle1" sx={{ mt: 3 }}>
+    ✅ Sample Response
+  </Typography>
+  <Box component="pre" sx={{ bgcolor: '#1e1e1e', color: '#fff', p: 2, borderRadius: 2 }}>
+    {`{
+  "longLivedToken": "AUTH_TOKEN_HERE",
+  "serverPublishPubKey": "SERVER_X25519_PUB_KEY",
+  "serverDeviceIdPubKey": "SERVER_X25519_DEVICE_ID_KEY",
+  "message": "Entity created successfully"
+}`}
+  </Box>
+
+  <Typography variant="subtitle1" sx={{ mt: 4 }}>
+    🎯 After Successful Creation
+  </Typography>
+  <ul>
+    <li>🔐 Securely store the <code>longLivedToken</code> (e.g., encrypted local storage)</li>
+    <li>📦 Cache the <code>serverPublishPubKey</code> and <code>serverDeviceIdPubKey</code> for secure communication</li>
+    <li>📲 Redirect the user to the app’s main screen or dashboard</li>
+  </ul>
+
+  <Typography variant="subtitle1" sx={{ mt: 4 }}>
+    🛡️ Best Practices
+  </Typography>
+  <ul>
+    <li>Never send private keys to the server</li>
+    <li>Regenerate keys on every new device installation</li>
+    <li>Encrypt sensitive data at rest</li>
+    <li>Use a secure random generator for key generation</li>
+  </ul>
+
+  <Typography variant="subtitle1" sx={{ mt: 4 }}>
+    🧪 Optional: CLI Test with grpcurl
+  </Typography>
+  <Box component="pre" sx={{ bgcolor: '#1e1e1e', color: '#fff', p: 2, borderRadius: 2 }}>
+    {`grpcurl -plaintext \\
+  -d @ \\
+  -proto protos/v1/vault.proto \\
+  localhost:6000 vault.v1.Entity/CreateEntity < payload.json`}
+  </Box>
+
+  <Typography variant="subtitle1" sx={{ mt: 4 }}>
+    📚 Related Resources
+  </Typography>
+  <ul>
+    <li><a href="https://github.com/smswithoutborders/RelaySMS-Android" target="_blank" rel="noopener noreferrer">RelaySMS Android</a></li>
+    <li><a href="https://github.com/smswithoutborders/RelaySMS-iOS" target="_blank" rel="noopener noreferrer">RelaySMS iOS</a></li>
+  </ul>
+</Box>
+
+        {/* ======================================= */}
       </Box>
 
       {/* Step 2 */}
@@ -224,6 +381,172 @@ const CreateEntity = () => {
             panOnScroll={false}
           />
         </Box>
+
+        {/* Vault-side Explanation */}
+<Box sx={{ mt: 10 }}>
+  <Typography variant="h5" gutterBottom>
+    🏛️ Vault Guide: Handling Entity Creation Requests
+  </Typography>
+  <Typography variant="body1" paragraph>
+    The Vault is responsible for securely registering new entities and verifying client ownership of phone numbers. An <strong>entity</strong> represents a user identity within the Vault system.
+  </Typography>
+
+  <Typography variant="body1" paragraph>
+    This process involves:
+  </Typography>
+  <ul>
+    <li>Receiving entity creation requests from clients</li>
+    <li>Verifying phone number ownership via OTP</li>
+    <li>Completing entity creation with secure token and key exchange</li>
+  </ul>
+
+  <Divider sx={{ my: 4 }} />
+
+  <Typography variant="h6" gutterBottom>
+    🧩 Step 1: Handle Initiate Creation Request
+  </Typography>
+  <Typography variant="body1" paragraph>
+    Upon receiving the initial <code>CreateEntityRequest</code>, the Vault must:
+  </Typography>
+  <ul>
+    <li>Verify the phone number format</li>
+    <li>Trigger OTP delivery to the user via SMS</li>
+    <li>Store a pending entity entry with public keys and temporary data</li>
+    <li>Respond with OTP status and next retry time</li>
+  </ul>
+
+  <Typography variant="subtitle1" sx={{ mt: 2 }}>
+    📥 Request (proto)
+  </Typography>
+  <Box component="pre" sx={{ bgcolor: '#1e1e1e', color: '#fff', p: 2, borderRadius: 2, fontSize: '0.9rem' }}>
+    {`message CreateEntityRequest {
+  string phone_number = 1;
+  string country_code = 2;
+  string password = 3;
+  string client_publish_pub_key = 4;
+  string client_device_id_pub_key = 5;
+}`}
+  </Box>
+
+  <Typography variant="subtitle1" sx={{ mt: 2 }}>
+    📤 Vault Actions
+  </Typography>
+  <ul>
+    <li>Generate and send OTP to <code>phone_number</code></li>
+    <li>Store request in a temporary entity pool</li>
+    <li>Set retry window and expiration</li>
+  </ul>
+
+  <Typography variant="subtitle1" sx={{ mt: 2 }}>
+    ✅ Response (CreateEntityResponse)
+  </Typography>
+  <Box component="pre" sx={{ bgcolor: '#1e1e1e', color: '#fff', p: 2, borderRadius: 2 }}>
+    {`message CreateEntityResponse {
+  bool requires_ownership_proof = 1;
+  string message = 2;
+  int32 next_attempt_timestamp = 3;
+}`}
+  </Box>
+
+  <Divider sx={{ my: 4 }} />
+
+  <Typography variant="h6">
+    🧾 Step 2: Handle Complete Entity Creation
+  </Typography>
+  <Typography variant="body1" paragraph>
+    After the client proves phone ownership (via OTP), the Vault receives another <code>CreateEntityRequest</code> — this time with the <code>ownership_proof_response</code> field.
+  </Typography>
+
+  <Typography variant="subtitle1" sx={{ mt: 1 }}>
+    📨 Extended Request Fields
+  </Typography>
+  <Box component="pre" sx={{ bgcolor: '#1e1e1e', color: '#fff', p: 2, borderRadius: 2 }}>
+    {`message CreateEntityRequest {
+  string phone_number = 1;
+  string country_code = 2;
+  string password = 3;
+  string ownership_proof_response = 4;
+  string client_publish_pub_key = 5;
+  string client_device_id_pub_key = 6;
+}`}
+  </Box>
+
+  <Typography variant="subtitle1" sx={{ mt: 2 }}>
+    🔐 Vault Actions
+  </Typography>
+  <ul>
+    <li>Validate OTP with stored proof</li>
+    <li>If valid:
+      <ul>
+        <li>Generate and store a new entity record</li>
+        <li>Issue a long-lived token (JWT or similar)</li>
+        <li>Return Vault’s public keys</li>
+      </ul>
+    </li>
+    <li>If invalid:
+      <ul>
+        <li>Return error and throttle retries</li>
+      </ul>
+    </li>
+  </ul>
+
+  <Typography variant="subtitle1" sx={{ mt: 2 }}>
+    ✅ Final Response (CreateEntityResponse)
+  </Typography>
+  <Box component="pre" sx={{ bgcolor: '#1e1e1e', color: '#fff', p: 2, borderRadius: 2 }}>
+    {`message CreateEntityResponse {
+  string message = 1;
+  string server_publish_pub_key = 2;
+  string server_device_id_pub_key = 3;
+  string long_lived_token = 4;
+}`}
+  </Box>
+
+  <Typography variant="subtitle1" sx={{ mt: 2 }}>
+    🔁 Sample Successful Response
+  </Typography>
+  <Box component="pre" sx={{ bgcolor: '#1e1e1e', color: '#fff', p: 2, borderRadius: 2 }}>
+    {`{
+  "message": "Entity created successfully",
+  "serverPublishPubKey": "VAULT_X25519_PUB_KEY",
+  "serverDeviceIdPubKey": "VAULT_DEVICE_ID_KEY",
+  "longLivedToken": "vault_token_string"
+}`}
+  </Box>
+
+  <Divider sx={{ my: 4 }} />
+
+  <Typography variant="subtitle1">
+    📌 Vault Requirements
+  </Typography>
+  <ul>
+    <li>Store encrypted passwords and tokens (e.g., using bcrypt + AES)</li>
+    <li>Enforce OTP expiration and retry limits</li>
+    <li>Ensure <code>long_lived_token</code> is securely generated (e.g., HMAC or JWT)</li>
+    <li>Prevent duplicate entities for the same <code>phone_number</code></li>
+  </ul>
+
+  <Typography variant="subtitle1" sx={{ mt: 2 }}>
+    🧪 Testing via CLI (grpcurl)
+  </Typography>
+  <Box component="pre" sx={{ bgcolor: '#1e1e1e', color: '#fff', p: 2, borderRadius: 2 }}>
+    {`grpcurl -plaintext \\
+  -d @ \\
+  -proto protos/v1/vault.proto \\
+  localhost:6000 vault.v1.Entity/CreateEntity < payload.json`}
+  </Box>
+
+  <Typography variant="subtitle1" sx={{ mt: 2 }}>
+    🛡️ Security Notes
+  </Typography>
+  <ul>
+    <li>OTPs should be single-use and time-limited (e.g., 5 minutes)</li>
+    <li>All keys must use X25519 and be base64-encoded</li>
+    <li>Long-lived tokens must be scoped and revocable</li>
+    <li>Avoid storing raw OTPs — use a hash with timestamp</li>
+  </ul>
+</Box>
+
       </Box>
 
       {/* Drawer */}
