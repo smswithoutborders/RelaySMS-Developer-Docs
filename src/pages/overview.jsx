@@ -55,20 +55,23 @@ const nodes = [
     data: { label: "Gmail" },
     position: { x: 940, y: 40 },
     targetPosition: "left",
+    sourcePosition: "right",
     style: { width: 120, background: "#fce4ec" },
   },
   {
     id: "Twitter",
     data: { label: "Twitter" },
     position: { x: 940, y: 100 },
-    targetPosition: "left",
+      targetPosition: "left",
+    sourcePosition: "right",
     style: { width: 120, background: "#e1f5fe" },
   },
   {
     id: "Telegram",
     data: { label: "Telegram" },
     position: { x: 940, y: 160 },
-    targetPosition: "left",
+     targetPosition: "left",
+    sourcePosition: "right",
     style: { width: 120, background: "#e0f2f1" },
   },
   {
@@ -171,6 +174,10 @@ const nodeClickMap = {
   Publisher: "Publisher",
   BridgeServer: "BridgeServer",
   Vault: "Vault",
+  Gmail: "Gmail",
+  Twitter: "Twitter",
+  Telegram: "Telegram",
+  EmailBridge: "EmailBridge"
 };
 
 const Overview = ({ handleDrawerOpen }) => (

@@ -19,7 +19,7 @@ import Overview from "./overview";
 const Main = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [drawerContent, setDrawerContent] = React.useState(null);
-  const [drawerTitle, setDrawerTitle] = React.useState(""); // NEW
+  const [drawerTitle, setDrawerTitle] = React.useState("");
 
   const mdxComponents = {
     Client: <Client />,
@@ -32,14 +32,14 @@ const Main = () => {
 
   const handleDrawerOpen = (key) => {
     setDrawerContent(mdxComponents[key]);
-    setDrawerTitle(key); // NEW
+    setDrawerTitle(key);
     setDrawerOpen(true);
   };
 
   const handleDrawerClose = () => {
     setDrawerOpen(false);
     setDrawerContent(null);
-    setDrawerTitle(""); // NEW
+    setDrawerTitle("");
   };
 
   return (

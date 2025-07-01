@@ -1,70 +1,38 @@
 import React, { useState } from "react";
 import {
   Box,
+  Grid,
   Typography,
   IconButton,
   Drawer,
-  Grid,
   Button,
 } from "@mui/material";
-import "reactflow/dist/style.css";
-import ReactFlow, { Background, Controls, MiniMap } from "reactflow";
-import {
-  CloseCircleOutlined,
-  LeftOutlined,
-  RightOutlined,
-} from "@ant-design/icons";
-import ExternalPlatforms from "../dataFlow/publishContent/platforms.mdx";
-import ExternalBridge from "../dataFlow/publishContent/bridgePlatforms.mdx";
+import { CloseCircleOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
+import Publisher from "../dataFlow/publishContent/publisher.mdx";
 import Client from "../dataFlow/publishContent/client.mdx";
 import GatewayClient from "../dataFlow/publishContent/gatewayClient.mdx";
 import GatewayServer from "../dataFlow/publishContent/gatewayServer.mdx";
-import Publisher from "../dataFlow/publishContent/publisher.mdx";
 import BridgeServer from "../dataFlow/publishContent/bridgeServer.mdx";
 import Vault from "../dataFlow/publishContent/vault.mdx";
+import ExternalPlatforms from "../dataFlow/publishContent/bridgePlatforms.mdx"
+import ExternalBridge from "../dataFlow/publishContent/platforms.mdx";
 import Overview from "./overview";
 
 const nodeDescriptions = {
-  client: {
-    title: "Clients (Apps)",
-    content: <Client />,
-  },
-  gatewayClient: {
-    title: "Gateway Client",
-    content: <GatewayClient />,
-  },
-  gatewayServer: {
-    title: "Gateway Server",
-    content: <GatewayServer />,
-  },
-  Publisher: {
-    title: "Publisher",
-    content: <Publisher />,
-  },
-  bridgeServer: {
-    title: "Bridge Server",
-    content: <BridgeServer />,
-  },
-  vault: {
-    title: "Vault",
-    content: <Vault />,
-  },
-  externalPlatforms: {
-    title: "External Platforms",
-    content: <ExternalPlatforms />,
-  },
-  externalBridges: {
-    title: "External Bridges",
-    content: <ExternalBridge />,
-  },
+  Client: { title: "Clients (Apps)", content: <Client /> },
+  GatewayClient: { title: "Gateway Client", content: <GatewayClient /> },
+  GatewayServer: { title: "Gateway Server", content: <GatewayServer /> },
+  Publisher: { title: "Publisher", content: <Publisher /> },
+  BridgeServer: { title: "Bridge Server", content: <BridgeServer /> },
+  Vault: { title: "Vault", content: <Vault /> },
+  ExternalPlatforms: { title: "External Platforms", content: <ExternalPlatforms /> },
+  ExternalBridges: { title: "External Bridges", content: <ExternalBridge /> },
 };
 
 const PublishContent = () => {
-  const [selectedNode, setSelectedNode] = useState(null);
-
-  const handleCloseDrawer = () => {
-    setSelectedNode(null);
-  };
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerContent, setDrawerContent] = useState(null);
+  const [drawerTitle, setDrawerTitle] = useState("");
 
   const content = `{
   "content": "encoded_relay_sms_payload",
@@ -73,102 +41,63 @@ const PublishContent = () => {
   }
 }`;
 
+  const handleDrawerOpen = (key) => {
+    const node = nodeDescriptions[key];
+    if (node) {
+      setDrawerContent(node.content);
+      setDrawerTitle(node.title);
+      setDrawerOpen(true);
+    }
+  };
+
+  const handleDrawerClose = () => {
+    setDrawerOpen(false);
+    setDrawerContent(null);
+    setDrawerTitle("");
+  };
+
   return (
     <Box>
-      <Box
-        sx={{
-          pt: { xs: 15, sm: 20, md: 15 },
-          my: "auto",
-          alignContent: "center",
-          textAlign: "center",
-
-          mx: { xs: 2, md: 15, sm: 10, lg: 25 },
-        }}
-      >
-        <Typography
-          variant="h1"
-          sx={{
-            fontWeight: "bold",
-            fontSize: { xs: "3rem", sm: "4rem", md: "6rem" },
-          }}
-          className="header"
-        >
+      <Box sx={{ pt: { xs: 15, sm: 20, md: 15 }, textAlign: "center", mx: { xs: 2, md: 15, sm: 10, lg: 25 } }}>
+        <Typography variant="h1" fontWeight="bold" fontSize={{ xs: "3rem", sm: "4rem", md: "6rem" }}>
           Publish Content
         </Typography>
-        <Typography variant="h6" sx={{ py: { md: 8, xs: 4 } }} wrap>
+        <Typography variant="h6" sx={{ py: { md: 8, xs: 4 } }}>
           This method handles publishing a relaysms payload.
         </Typography>
       </Box>
-      {/*  */}
 
-      <Box
-        sx={{
-          pt: { xs: 2, sm: 2, md: 2 },
-          my: "auto",
-          alignContent: "center",
-          textAlign: "center",
-          mb: { xs: 6, md: 15, sm: 10, lg: 8 },
-          mx: { xs: 2, md: 15, sm: 10, lg: 25 },
-        }}
-      >
-        <Box>
-          <Overview />
-        </Box>
+      <Box sx={{ textAlign: "center", mx: { xs: 2, md: 15, sm: 10, lg: 25 }, mb: { xs: 6, md: 15 } }}>
+        <Overview handleDrawerOpen={handleDrawerOpen} />
       </Box>
-      <Box
-        sx={{
-          mx: { xs: 2, md: 15, sm: 10, lg: 25 },
-          my: 3,
-          mb: 10,
-        }}
-      >
+
+      <Box sx={{ mx: { xs: 2, md: 15 }, my: 3, mb: 10 }}>
         <Typography variant="h6">Sample payload.json</Typography>
-        <pre
-          style={{
-            margin: 0,
-            whiteSpace: "pre-wrap",
-            wordBreak: "break-word",
-          }}
-        >
-          {content}
-        </pre>
+        <pre style={{ margin: 0, whiteSpace: "pre-wrap", wordBreak: "break-word" }}>{content}</pre>
       </Box>
+
       <Drawer
         anchor="right"
-        open={!!selectedNode}
-        onClose={handleCloseDrawer}
+        open={drawerOpen}
+        onClose={handleDrawerClose}
         PaperProps={{ sx: { width: { xs: "100%", sm: 400, lg: 600 }, p: 3 } }}
       >
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          {selectedNode && (
-            <Box>
-              <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Grid size={10}>
-                  <Typography variant="h5" fontWeight="bold">
-                    {nodeDescriptions[selectedNode.type]?.title}
-                  </Typography>
-                </Grid>
-                <Grid size={2} justifyContent="flex-end" alignItems="end">
-                  <IconButton onClick={handleCloseDrawer}>
-                    <CloseCircleOutlined />
-                  </IconButton>
-                </Grid>
-              </Grid>
-              <Box mt={2}>{nodeDescriptions[selectedNode.type]?.content}</Box>
-            </Box>
-          )}
+          <Typography variant="h5" fontWeight="bold">
+            {drawerTitle || "Details"}
+          </Typography>
+          <IconButton onClick={handleDrawerClose}>
+            <CloseCircleOutlined style={{ fontSize: 24 }} />
+          </IconButton>
         </Box>
+        <Box mt={2}>{drawerContent}</Box>
       </Drawer>
+
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          mx: { xs: 2, md: 15, sm: 10, lg: 25 },
+          mx: { xs: 2, md: 15 },
           my: 5,
         }}
       >
@@ -182,9 +111,7 @@ const PublishContent = () => {
             fontWeight: "bold",
             fontSize: { md: "1rem", xs: "0.8rem" },
             color: "primary.main",
-            "&:hover": {
-              textDecoration: "none",
-            },
+            "&:hover": { textDecoration: "none" },
           }}
         >
           Back to Store Token
@@ -199,9 +126,7 @@ const PublishContent = () => {
             fontWeight: "bold",
             fontSize: { md: "1rem", xs: "0.8rem" },
             color: "primary.main",
-            "&:hover": {
-              textDecoration: "none",
-            },
+            "&:hover": { textDecoration: "none" },
           }}
         >
           Continue to Telemetry
