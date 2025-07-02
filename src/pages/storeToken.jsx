@@ -27,18 +27,14 @@ import {
   LeftOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import Client from "../dataFlow/storeToken/client.mdx";
-import Vault from "../dataFlow/storeToken/vault.mdx";
 import { Link } from "react-router-dom";
 
 const nodeDescriptions = {
   client: {
-    title: "Clients (Apps)",
-    content: <Client />,
+    title: "Clients (Apps)"
   },
   vault: {
-    title: "Vault",
-    content: <Vault />,
+    title: "Vault"
   },
 };      {/* ===== */}
 

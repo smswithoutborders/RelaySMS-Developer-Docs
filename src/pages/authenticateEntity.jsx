@@ -20,18 +20,14 @@ import {
   LeftOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import Client from "../dataFlow/authenticateEntity/client.mdx";
-import Vault from "../dataFlow/authenticateEntity/vault.mdx";
 import { Link } from "react-router-dom";
 
 const nodeDescriptions = {
   client: {
     title: "Clients (Apps)",
-    content: <Client />,
   },
   vault: {
     title: "Vault",
-    content: <Vault />,
   },
 };
 

@@ -14,24 +14,18 @@ import {
   LeftOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import Publisher from "../dataFlow/telemetry/publisher.mdx";
-import Vault from "../dataFlow/telemetry/vault.mdx";
-import TelemetryAggregator from "../dataFlow/telemetry/telemetryAggregator.mdx";
 
 const nodeDescriptions = {
   vault: {
     title: "Vault",
-    content: <Vault />,
     id: "vault",
   },
   Publisher: {
     title: "Publisher",
-    content: <Publisher />,
     id: "publisher",
   },
   aggregator: {
     title: "Telemetry Aggregator",
-    content: <TelemetryAggregator />,
     id: "aggregator",
   },
 };

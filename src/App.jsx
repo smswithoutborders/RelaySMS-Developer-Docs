@@ -19,7 +19,6 @@ import { createAppTheme } from "./components/theme";
 function AppRoutes({ toggleMode, mode }) {
   const location = useLocation();
 
-  // Smooth scroll to anchor on route change
   useEffect(() => {
     if (location.hash) {
       const el = document.getElementById(location.hash.replace("#", ""));
@@ -39,7 +38,7 @@ function AppRoutes({ toggleMode, mode }) {
         <Route path="/authenticate-entity" element={<AuthenticateEntity />} />
         <Route path="/store-token" element={<StoreToken />} />
         <Route path="/reliability-test" element={<ReliabilityTest />} />
-        <Route path="/telemetry-docs" element={<Telemetry />} />
+        <Route path="/telemetry" element={<Telemetry />} />
         <Route path="/contribution" element={<Contribution />} />
       </Routes>
       <FooterComp />

@@ -21,9 +21,6 @@ import {
   CopyOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import Publisher from "../dataFlow/telemetry/publisher.mdx";
-import Vault from "../dataFlow/telemetry/vault.mdx";
-import TelemetryAggregator from "../dataFlow/telemetry/telemetryAggregator.mdx";
 
 const nodeDescriptions = {
   client: {

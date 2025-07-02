@@ -16,23 +16,18 @@ import {
 import "reactflow/dist/style.css";
 import ReactFlow from "reactflow";
 import {
-  ArrowRightOutlined,
   CloseCircleOutlined,
   CopyOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import Client from "../dataFlow/createEntity/client.mdx";
-import Vault from "../dataFlow/createEntity/vault.mdx";
 import { Link } from "react-router-dom";
 
 const nodeDescriptions = {
   client: {
     title: "Clients (Apps)",
-    content: <Client />,
   },
   vault: {
     title: "Vault",
-    content: <Vault />,
   },
 };
 

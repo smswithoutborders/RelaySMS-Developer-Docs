@@ -8,33 +8,21 @@ import {
   Table, TableBody, TableCell, TableHead, TableRow, Paper, Link, Alert
 } from "@mui/material";
 import { CloseCircleOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
-import Publisher from "../dataFlow/publishContent/publisher.mdx";
-import Client from "../dataFlow/publishContent/client.mdx";
-import GatewayClient from "../dataFlow/publishContent/gatewayClient.mdx";
-import GatewayServer from "../dataFlow/publishContent/gatewayServer.mdx";
-import BridgeServer from "../dataFlow/publishContent/bridgeServer.mdx";
-import Vault from "../dataFlow/publishContent/vault.mdx";
-import ExternalPlatforms from "../dataFlow/publishContent/bridgePlatforms.mdx"
-import ExternalBridge from "../dataFlow/publishContent/platforms.mdx";
-import Gmail from "../dataFlow/publishContent/gmail.mdx";
-import Telegram from "../dataFlow/publishContent/telegram.mdx";
-import Twitter from "../dataFlow/publishContent/twitter.mdx";
-import EmailBridge from "../dataFlow/publishContent/gmailbridge.mdx";
 import Overview from "./overview";
 
 const nodeDescriptions = {
-  Client: { title: "Clients (Apps)", content: <Client /> },
-  GatewayClient: { title: "Gateway Client", content: <GatewayClient /> },
-  GatewayServer: { title: "Gateway Server", content: <GatewayServer /> },
-  Publisher: { title: "Publisher", content: <Publisher /> },
-  BridgeServer: { title: "Bridge Server", content: <BridgeServer /> },
-  Vault: { title: "Vault", content: <Vault /> },
-  ExternalPlatforms: { title: "External Platforms", content: <ExternalPlatforms /> },
-  ExternalBridges: { title: "External Bridges", content: <ExternalBridge /> },
-  EmailBridge: { title: "Gmail Bridges", content: <EmailBridge /> },
-  Gmail: { title: "Gmail", content: <Gmail /> },
-  Twitter: { title: "Twitter", content: <Twitter /> },
-  Telegram: {title: "Telegram", content: <Telegram /> },
+  Client: { title: "Clients (Apps)" },
+  GatewayClient: { title: "Gateway Client"},
+  GatewayServer: { title: "Gateway Server"},
+  Publisher: { title: "Publisher"},
+  BridgeServer: { title: "Bridge Server" },
+  Vault: { title: "Vault" },
+  ExternalPlatforms: { title: "External Platforms"},
+  ExternalBridges: { title: "External Bridges" },
+  EmailBridge: { title: "Gmail Bridges" },
+  Gmail: { title: "Gmail"},
+  Twitter: { title: "Twitter" },
+  Telegram: {title: "Telegram" },
 };
 
 const PublishContent = () => {

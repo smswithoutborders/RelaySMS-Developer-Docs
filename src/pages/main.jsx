@@ -94,57 +94,9 @@ const Main = () => {
           <Overview handleDrawerOpen={handleDrawerOpen} />
         </Box>
       </Box>
-      <Box
-        id="instances"
-        sx={{
-          pt: { xs: 4, sm: 6, md: 30 },
-          my: 2,
-          alignContent: "center",
-          textAlign: "center",
-          mb: { xs: 6, md: 15, sm: 10, lg: 25 },
-          mx: { xs: 2, md: 15, sm: 10, lg: 25 },
-        }}
-      >
-        <Typography
-          variant="h4"
-          sx={{
-            fontWeight: "bold",
-          }}
-          className="header"
-        >
-          Data Flow Guides
-        </Typography>
-        <Typography variant="body1" sx={{ py: { md: 8, xs: 4 } }} wrap>
-          These guides will help you understand how to use the RelaySMS system
-          effectively. Each guide provides step-by-step instructions and code{" "}
-          <br />
-          examples to help you get started quickly.
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid size={{ md: 4, xs: 6 }}>
-            <ButtonOutline linkTo="/create-entity" text="Create Entity" />
-          </Grid>
-          <Grid size={{ md: 4, xs: 6 }}>
-            <ButtonOutline
-              linkTo="/authenticate-entity"
-              text="Authenticate Entity"
-            />
-          </Grid>
-          <Grid size={{ md: 4, xs: 6 }}>
-            <ButtonOutline linkTo="/store-token" text="Store Token" />
-          </Grid>
-          <Grid size={{ md: 4, xs: 6 }}>
-            <ButtonOutline linkTo="/publish-content" text="Publish Content" />
-          </Grid>
-          <Grid size={{ md: 4, xs: 6 }}>
-            <ButtonOutline linkTo="/telemetry" text="Telemetry" />
-          </Grid>
-          <Grid size={{ md: 4, xs: 6 }}>
-            <ButtonOutline linkTo="/reliability-test" text="Reliability Test" />
-          </Grid>
-        </Grid>
-      </Box>
-      <Drawer
+
+
+        <Drawer
         anchor="right"
         open={drawerOpen}
         onClose={handleDrawerClose}
