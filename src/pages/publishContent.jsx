@@ -19,7 +19,7 @@ import ExternalBridge from "../dataFlow/publishContent/platforms.mdx";
 import Gmail from "../dataFlow/publishContent/gmail.mdx";
 import Telegram from "../dataFlow/publishContent/telegram.mdx";
 import Twitter from "../dataFlow/publishContent/twitter.mdx";
-import GmailBridge from "../dataFlow/publishContent/gmailbridge.mdx";
+import EmailBridge from "../dataFlow/publishContent/gmailbridge.mdx";
 import Overview from "./overview";
 
 const nodeDescriptions = {
@@ -31,7 +31,7 @@ const nodeDescriptions = {
   Vault: { title: "Vault", content: <Vault /> },
   ExternalPlatforms: { title: "External Platforms", content: <ExternalPlatforms /> },
   ExternalBridges: { title: "External Bridges", content: <ExternalBridge /> },
-  GmailBridges: { title: "Gmail Bridges", content: <GmailBridge /> },
+  EmailBridge: { title: "Gmail Bridges", content: <EmailBridge /> },
   Gmail: { title: "Gmail", content: <Gmail /> },
   Twitter: { title: "Twitter", content: <Twitter /> },
   Telegram: {title: "Telegram", content: <Telegram /> },

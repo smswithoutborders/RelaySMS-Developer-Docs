@@ -17,7 +17,7 @@ import Vault from "../documentations/vault/index.mdx";
 import Gmail from "../documentations/gmail/index.mdx"
 import Telegram from "../documentations/telegram/index.mdx"
 import Twitter from "../documentations/twitter/index.mdx"
-import GmailBridge from "../documentations/gmailbridge/index.mdx"
+import EmailBridge from "../documentations/gmailbridge/index.mdx"
 import Overview from "./overview";
 
 const Main = () => {
@@ -34,8 +34,8 @@ const Main = () => {
     BridgeServer: <BridgeServer />,
     Gmail: <Gmail />,
     Telegram: <Telegram />,
-     Twitter: <Twitter />,
-    GmailBridge: <GmailBridge />
+    Twitter: <Twitter />,
+    EmailBridge: <EmailBridge />
   };
 
   const handleDrawerOpen = (key) => {
@@ -120,7 +120,7 @@ const Main = () => {
           <br />
           examples to help you get started quickly.
         </Typography>
-        <Grid container spacing={2}>import Telegram from "../documentations/telegram/index.mdx"
+        <Grid container spacing={2}>
           <Grid size={{ md: 4, xs: 6 }}>
             <ButtonOutline linkTo="/create-entity" text="Create Entity" />
           </Grid>
