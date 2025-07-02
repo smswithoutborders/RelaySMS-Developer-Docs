@@ -7,13 +7,17 @@ import {
   Drawer,
   Alert,
 } from "@mui/material";
-import { ButtonContained, ButtonOutline } from "../components";
+import { ButtonOutline } from "../components";
 import Client from "../documentations/client/index.mdx";
 import GatewayClient from "../documentations/gatewayClient/index.mdx";
 import GatewayServer from "../documentations/gatewayServer/index.mdx";
 import Publisher from "../documentations/publisher/index.mdx";
 import BridgeServer from "../documentations/bridgeServer/index.mdx";
 import Vault from "../documentations/vault/index.mdx";
+import Gmail from "../documentations/gmail/index.mdx"
+import Telegram from "../documentations/telegram/index.mdx"
+import Twitter from "../documentations/twitter/index.mdx"
+import GmailBridge from "../documentations/gmailbridge/index.mdx"
 import Overview from "./overview";
 
 const Main = () => {
@@ -28,6 +32,10 @@ const Main = () => {
     GatewayClient: <GatewayClient />,
     GatewayServer: <GatewayServer />,
     BridgeServer: <BridgeServer />,
+    Gmail: <Gmail />,
+    Telegram: <Telegram />,
+     Twitter: <Twitter />,
+    GmailBridge: <GmailBridge />
   };
 
   const handleDrawerOpen = (key) => {
@@ -112,7 +120,7 @@ const Main = () => {
           <br />
           examples to help you get started quickly.
         </Typography>
-        <Grid container spacing={2}>
+        <Grid container spacing={2}>import Telegram from "../documentations/telegram/index.mdx"
           <Grid size={{ md: 4, xs: 6 }}>
             <ButtonOutline linkTo="/create-entity" text="Create Entity" />
           </Grid>
