@@ -1,5 +1,5 @@
-import ReactFlow, { Handle } from "reactflow";
-import { Box, Typography, Alert } from "@mui/material";
+import ReactFlow from "reactflow";
+import { Box } from "@mui/material";
 
 const nodes = [
   {
@@ -79,6 +79,7 @@ const nodes = [
     data: { label: "Email Bridge" },
     position: { x: 940, y: 280 },
     targetPosition: "left",
+    sourcePosition: "right",
     style: { width: 120, background: "#fff3e0" },
   },
 ];

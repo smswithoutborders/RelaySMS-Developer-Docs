@@ -1,58 +1,55 @@
-# RelaySMS Publisher
+## 🧩 Publisher
 
-RelaySMS Publisher allows users to publish content to online platforms (like Gmail, Twitter, Telegram) using SMS when internet connectivity is unavailable.
+**Publisher** is the middleware layer that connects the **Gateway Server** to the **RelaySMS (SMSWithoutBorders) backend**.  
+It plays a critical role in securely relaying and translating user intentions—sent via SMS—into valid, authenticated requests to online platforms like Gmail, Twitter, and Telegram.
 
-## Requirements
+---
 
-- **Python**: Version >= 3.8.10
-- **Dependencies**: Install system packages:
-  ```bash
-  sudo apt install build-essential python3-dev
-  ```
+### 🔄 What Does Publisher Do?
 
-## Quick Start
+The Publisher acts as a **secure interpreter** and **executor**:
 
-1. **Setup virtual environment**:
+1. ✅ Receives SMS-based command payloads from the Gateway Server
+2. 🤝 Performs a secure handshake with the backend to validate the request
+3. 🔐 Decrypts the OAuth2 tokens stored in encrypted Vaults
+4. 📡 Uses the decrypted tokens to make authorized API calls on behalf of the user
+5. 📥 Returns the response to be sent back via SMS through the gateway
 
-   ```bash
-   python3 -m venv venv
-   . venv/bin/activate
-   pip install -r requirements.txt
-   ```
+This makes it possible for users with **no internet connection** to interact with cloud-based platforms **using only SMS**.
 
-2. **Download and compile protocol buffers**:
+---
 
-   ```bash
-   make grpc-compile
-   ```
+### 🚀 Use Case: Publishing via SMS
 
-3. **Start the server**:
+A user without internet sends an SMS formatted command to a gateway client.  
+That SMS reaches the Publisher, which:
 
-   ```bash
-   export GRPC_HOST=localhost
-   export GRPC_PORT=8000
-   # Additional environment variables as needed
+- Authenticates the user via token signature
+- Decrypts their token from a secure vault
+- Sends the command (e.g., "Tweet this text" or "Send Gmail") to the respective platform
+- Retrieves the response (e.g., “Tweet posted!”)
+- Sends it back to the user via SMS
 
-   # Start the server
-   python3 grpc_server.py
-   ```
+All of this happens within seconds, transparently and securely.
 
-## Supported Platforms
+---
 
-The list of supported platforms is available in [platforms.json](resources/platforms.json) and can also be retrieved from the REST API at [https://publisher.smswithoutborders.com/v1/platforms](https://publisher.smswithoutborders.com/v1/platforms).
+### 🔐 Security & Trust
 
-## Testing
+Publisher enforces:
 
-For information on setting up and running tests, see the [Test Documentation](tests/README.md).
+- **Vault-Based Token Storage**: OAuth2 tokens are never exposed; they are encrypted at rest.
+- **Request Signing & Verification**: All commands are signed and validated to prevent spoofing.
+- **Least Privilege**: Requests are made only with the minimum required scopes.
 
-## Platform Adapters
+---
 
-Platform adapters can be used to extend RelaySMS Publisher's functionality. For more information, see the [Platforms Documentation](platforms/README.md).
+### 📚 Learn More
 
-## Documentation
+- 🧠 [How the Publisher Works](https://github.com/smswithoutborders/RelaySMS-Publisher/blob/main/docs/grpc.md)
+- 🔐 [Content and Payload Specification](https://github.com/smswithoutborders/RelaySMS-Publisher/blob/main/docs/grpc.md)
+- ⚙️ [REST API Documentation](https://publisher.smswithoutborders.com/docs)
 
-- [gRPC API Documentation](docs/grpc.md)
-- [Content and Payload Specifications](docs/specification.md)
-- [REST API Documentation](https://publisher.smswithoutborders.com/docs)
-- [Reliability Testing](docs/reliability_test.md)
+---
 
+> ✨ **Fun Fact:** With RelaySMS Publisher, users can post to Twitter or send a Gmail just by sending an SMS—no apps, no data required.

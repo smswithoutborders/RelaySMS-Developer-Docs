@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import {
   Box,
-  Grid,
   Typography,
   IconButton,
   Drawer,
   Button,
+  Table, TableBody, TableCell, TableHead, TableRow, Paper, Link, Alert
 } from "@mui/material";
 import { CloseCircleOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Publisher from "../dataFlow/publishContent/publisher.mdx";
@@ -16,6 +16,10 @@ import BridgeServer from "../dataFlow/publishContent/bridgeServer.mdx";
 import Vault from "../dataFlow/publishContent/vault.mdx";
 import ExternalPlatforms from "../dataFlow/publishContent/bridgePlatforms.mdx"
 import ExternalBridge from "../dataFlow/publishContent/platforms.mdx";
+import Gmail from "../dataFlow/publishContent/gmail.mdx";
+import Telegram from "../dataFlow/publishContent/telegram.mdx";
+import Twitter from "../dataFlow/publishContent/twitter.mdx";
+import EmailBridge from "../dataFlow/publishContent/gmailbridge.mdx";
 import Overview from "./overview";
 
 const nodeDescriptions = {
@@ -27,19 +31,16 @@ const nodeDescriptions = {
   Vault: { title: "Vault", content: <Vault /> },
   ExternalPlatforms: { title: "External Platforms", content: <ExternalPlatforms /> },
   ExternalBridges: { title: "External Bridges", content: <ExternalBridge /> },
+  EmailBridge: { title: "Gmail Bridges", content: <EmailBridge /> },
+  Gmail: { title: "Gmail", content: <Gmail /> },
+  Twitter: { title: "Twitter", content: <Twitter /> },
+  Telegram: {title: "Telegram", content: <Telegram /> },
 };
 
 const PublishContent = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerContent, setDrawerContent] = useState(null);
   const [drawerTitle, setDrawerTitle] = useState("");
-
-  const content = `{
-  "content": "encoded_relay_sms_payload",
-  "metadata": {
-    "From": "+1234567890"
-  }
-}`;
 
   const handleDrawerOpen = (key) => {
     const node = nodeDescriptions[key];
@@ -72,9 +73,172 @@ const PublishContent = () => {
       </Box>
 
       <Box sx={{ mx: { xs: 2, md: 15 }, my: 3, mb: 10 }}>
-        <Typography variant="h6">Sample payload.json</Typography>
-        <pre style={{ margin: 0, whiteSpace: "pre-wrap", wordBreak: "break-word" }}>{content}</pre>
+      {/* Request Section */}
+      <Typography variant="h5" gutterBottom>
+        Request
+      </Typography>
+      <Typography>
+        <strong>request</strong> <code>PublishContentRequest</code>
+      </Typography>
+
+      <Alert severity="warning" sx={{ my: 2 }}>
+        <strong>Important:</strong> The table lists only the required fields for this step. Other fields will be ignored.
+      </Alert>
+
+      <Paper variant="outlined" sx={{ overflowX: 'auto' }}>
+        <Table size="small" aria-label="request fields table">
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Field</strong></TableCell>
+              <TableCell><strong>Type</strong></TableCell>
+              <TableCell><strong>Description</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell>content</TableCell>
+              <TableCell>string</TableCell>
+              <TableCell>The content payload to be published.</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>metadata</TableCell>
+              <TableCell>map&lt;string, string&gt;</TableCell>
+              <TableCell>Metadata about the content.</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </Paper>
+
+      {/* Response Section */}
+      <Box mt={5}>
+        <Typography variant="h5" gutterBottom>
+          Response
+        </Typography>
+        <Typography>
+          <strong>response</strong> <code>PublishContentResponse</code>
+        </Typography>
+
+        <Alert severity="warning" sx={{ my: 2 }}>
+          <strong>Important:</strong> The table lists only the fields that are populated for this step. Other fields may be empty, omitted, or false.
+        </Alert>
+
+        <Paper variant="outlined" sx={{ overflowX: 'auto' }}>
+          <Table size="small" aria-label="response fields table">
+            <TableHead>
+              <TableRow>
+                <TableCell><strong>Field</strong></TableCell>
+                <TableCell><strong>Type</strong></TableCell>
+                <TableCell><strong>Description</strong></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>message</TableCell>
+                <TableCell>string</TableCell>
+                <TableCell>A response message from the server.</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>publisher_response</TableCell>
+                <TableCell>string</TableCell>
+                <TableCell>The encrypted response from the publisher, if any.</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>success</TableCell>
+                <TableCell>bool</TableCell>
+                <TableCell>Indicates if the operation was successful.</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </Paper>
       </Box>
+
+      {/* Method Section */}
+      <Box mt={5}>
+        <Typography variant="h5" gutterBottom>
+          Method
+        </Typography>
+        <Typography>
+          <strong>method</strong> <code>PublishContent</code>
+        </Typography>
+
+        <Alert severity="info" sx={{ my: 2 }}>
+          <strong>Tip:</strong> The examples below use{' '}
+          <Link href="https://github.com/fullstorydev/grpcurl#grpcurl" target="_blank" rel="noopener noreferrer">
+            grpcurl
+          </Link>.
+        </Alert>
+
+        <Typography variant="h6" gutterBottom>
+          Sample request
+        </Typography>
+       
+        <Paper variant="outlined"sx={(theme) => ({
+             backgroundColor:
+    theme.palette.mode === 'dark'
+      ? theme.palette.grey[900]
+      : theme.palette.grey[100],
+  color: theme.palette.text.primary,
+  p: 2,
+  borderRadius: 2,
+  overflow: 'auto',
+  fontFamily: 'monospace',
+  fontSize: '0.875rem',
+  whiteSpace: 'pre-wrap',
+            })}
+            >
+          {`grpcurl -plaintext \\
+    -d @ \\
+    -proto protos/v1/publisher.proto \\
+localhost:6000 publisher.v1.Publisher/PublishContent <payload.json`}
+        </Paper>
+
+        <Typography variant="h6" mt={4} gutterBottom>
+          Sample payload.json
+        </Typography>
+        <Paper variant="outlined" sx={(theme) => ({
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.grey[100],
+      color: theme.palette.text.primary,
+      p: 2,
+      borderRadius: 2,
+      overflow: "auto",
+      fontFamily: "monospace",
+      fontSize: "0.875rem",
+    })}>
+          {`{
+  "content": "encoded_relay_sms_payload",
+  "metadata": {
+    "From": "+1234567890"
+  }
+}`}
+        </Paper>
+
+        <Typography variant="h6" mt={4} gutterBottom>
+          Sample response
+        </Typography>
+        <Paper variant="outlined" sx={(theme) => ({
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.grey[100],
+      color: theme.palette.text.primary,
+      p: 2,
+      borderRadius: 2,
+      overflow: "auto",
+      fontFamily: "monospace",
+      fontSize: "0.875rem",
+    })}>
+          {`{
+  "message": "Successfully published Gmail message",
+  "publisher_response": "encrypted_response_payload",
+  "success": true
+}`}
+        </Paper>
+      </Box>
+    </Box>
+
 
       <Drawer
         anchor="right"

@@ -11,6 +11,13 @@ import {
   DialogActions,
   Snackbar,
   Button,
+   Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
 } from "@mui/material";
 import "reactflow/dist/style.css";
 import ReactFlow from "reactflow";
@@ -33,7 +40,8 @@ const nodeDescriptions = {
     title: "Vault",
     content: <Vault />,
   },
-};
+};      {/* ===== */}
+
 
 const nodes = [
   {
@@ -111,8 +119,8 @@ const StoreToken = () => {
   };
 
   return (
-    <Box>
-      <Box
+  <Box sx={{ my: 10, mx: { xs: 2, md: 15, sm: 10, lg: 25 } }}>
+  <Box
         sx={{
           pt: { xs: 15, sm: 20, md: 15 },
           mx: { xs: 2, md: 15, sm: 10, lg: 25 },
@@ -136,7 +144,7 @@ const StoreToken = () => {
       </Box>
 
       {/* Step 1 */}
-      <Box sx={{ my: 10, mx: { xs: 2, md: 15, sm: 10, lg: 25 } }}>
+      <Box>
         <Alert severity="info">
           Tip: Click on the arrows in the diagram to see the payload structure.
         </Alert>
@@ -164,6 +172,987 @@ const StoreToken = () => {
           </ul>
         </Typography>
       </Box>
+
+      {/* Store an Entity's Token */}
+      <Typography variant="h4" gutterBottom mt={4}>
+        Store an Entity's Token
+      </Typography>
+      <Typography paragraph>
+        This step involves storing tokens securely for the authenticated entity.
+      </Typography>
+      <hr />
+
+      {/* Request */}
+      <Typography variant="h6" gutterBottom mt={2}>
+        Request
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        <code>request</code> <strong>StoreEntityTokenRequest</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The table lists only the required fields for this step. Other fields will be ignored.
+      </Alert>
+
+      <TableContainer component={Paper} sx={{ mb: 3 }}>
+        <Table size="small" aria-label="StoreEntityTokenRequest required fields">
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Field</strong></TableCell>
+              <TableCell><strong>Type</strong></TableCell>
+              <TableCell><strong>Description</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {[
+              { field: "long_lived_token", type: "string", description: "The long-lived token for the authenticated session." },
+              { field: "token", type: "string", description: "The token to be stored." },
+              { field: "platform", type: "string", description: 'The platform from which the token is being issued. (e.g., "gmail").' },
+              { field: "account_identifier", type: "string", description: "The identifier of the account associated with the token." },
+            ].map(({ field, type, description }) => (
+              <TableRow key={field}>
+                <TableCell>{field}</TableCell>
+                <TableCell>{type}</TableCell>
+                <TableCell>{description}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <Typography variant="subtitle2" gutterBottom>
+        Optional fields:
+      </Typography>
+      <TableContainer component={Paper} sx={{ mb: 3 }}>
+        <Table size="small" aria-label="StoreEntityTokenRequest optional fields">
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Field</strong></TableCell>
+              <TableCell><strong>Type</strong></TableCell>
+              <TableCell><strong>Description</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell>code_verifier</TableCell>
+              <TableCell>string</TableCell>
+              <TableCell>A cryptographic random string used in the PKCE flow.</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* Response */}
+      <Typography variant="h6" gutterBottom mt={4}>
+        Response
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        <code>response</code> <strong>StoreEntityTokenResponse</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The table lists only the fields that are populated for this step. Other fields may be empty, omitted, or false.
+      </Alert>
+      <TableContainer component={Paper} sx={{ mb: 3 }}>
+        <Table size="small" aria-label="StoreEntityTokenResponse fields">
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Field</strong></TableCell>
+              <TableCell><strong>Type</strong></TableCell>
+              <TableCell><strong>Description</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {[
+              { field: "message", type: "string", description: "A response message from the server." },
+              { field: "success", type: "boolean", description: "Indicates if the operation was successful." },
+            ].map(({ field, type, description }) => (
+              <TableRow key={field}>
+                <TableCell>{field}</TableCell>
+                <TableCell>{type}</TableCell>
+                <TableCell>{description}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* Method */}
+      <Typography variant="h6" gutterBottom mt={4}>
+        Method
+      </Typography>
+      <Typography paragraph>
+        <code>method</code> <strong>StoreEntityToken</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The examples below use{" "}
+        <a href="https://github.com/fullstorydev/grpcurl#grpcurl" target="_blank" rel="noopener noreferrer">
+          grpcurl
+        </a>
+        .
+      </Alert>
+      <Alert severity="info" sx={{ mb: 3 }}>
+        Here is what a successful response from the server looks like.<br />
+        The server would return a status code of <code>0 OK</code> if the API transaction goes through without any friction. Otherwise, it will return any other code out of the{" "}
+        <a href="https://grpc.github.io/grpc/core/md_doc_statuscodes.html" target="_blank" rel="noopener noreferrer">
+          17 codes supported by gRPC
+        </a>.
+      </Alert>
+
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+        Sample request
+      </Typography>
+      <Box
+    component="pre"
+    sx={(theme) => ({
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.grey[100],
+      color: theme.palette.text.primary,
+      p: 2,
+      borderRadius: 2,
+      overflow: "auto",
+      fontFamily: "monospace",
+      fontSize: "0.875rem",
+    })}
+  >
+        {`grpcurl -plaintext \\
+    -d @ \\
+    -proto protos/v1/vault.proto \\
+localhost:6000 vault.v1.Entity/StoreEntityToken <payload.json`}
+      </Box>
+
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+        Sample payload.json
+      </Typography>
+      <Box
+    component="pre"
+    sx={(theme) => ({
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.grey[100],
+      color: theme.palette.text.primary,
+      p: 2,
+      borderRadius: 2,
+      overflow: "auto",
+      fontFamily: "monospace",
+      fontSize: "0.875rem",
+    })}
+  >
+        {`{
+  "long_lived_token": "long_lived_token",
+  "authorization_code": "oauth2_code",
+  "platform": "gmail",
+  "protocol": "oauth2"
+}`}
+      </Box>
+
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+        Sample response
+      </Typography>
+        <Box
+    component="pre"
+    sx={(theme) => ({
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.grey[100],
+      color: theme.palette.text.primary,
+      p: 2,
+      borderRadius: 2,
+      overflow: "auto",
+      fontFamily: "monospace",
+      fontSize: "0.875rem",
+    })}
+  >
+        {`{
+  "message": "Token stored successfully.",
+  "success": true
+}`}
+      </Box>
+
+      {/* Get Entity Access Token */}
+      <Typography variant="h4" gutterBottom mt={4}>
+        Get Entity Access Token
+      </Typography>
+      <Typography paragraph>
+        This function retrieves an entity's access token.
+      </Typography>
+      <hr />
+
+      {/* Request */}
+      <Typography variant="h6" gutterBottom mt={2}>
+        Request
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        <code>request</code> <strong>GetEntityAccessTokenRequest</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The table lists only the required fields for this step. Other fields will be ignored.
+      </Alert>
+      <TableContainer component={Paper} sx={{ mb: 3 }}>
+        <Table size="small" aria-label="GetEntityAccessTokenRequest required fields">
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Field</strong></TableCell>
+              <TableCell><strong>Type</strong></TableCell>
+              <TableCell><strong>Description</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {[
+              {
+                field: "device_id or phone_number or long_lived_token",
+                type: "string",
+                description:
+                  "The unique identifier of the device or the phone number or the long lived token used by the entity.",
+              },
+              { field: "platform", type: "string", description: 'The platform from which the token is being issued. (e.g., "gmail").' },
+              { field: "account_identifier", type: "string", description: "The identifier of the account associated with the token." },
+            ].map(({ field, type, description }) => (
+              <TableRow key={field}>
+                <TableCell>{field}</TableCell>
+                <TableCell>{type}</TableCell>
+                <TableCell>{description}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* Response */}
+      <Typography variant="h6" gutterBottom mt={4}>
+        Response
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        <code>response</code> <strong>GetEntityAccessTokenResponse</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The table lists only the fields that are populated for this step. Other fields may be empty, omitted, or false.
+      </Alert>
+      <TableContainer component={Paper} sx={{ mb: 3 }}>
+        <Table size="small" aria-label="GetEntityAccessTokenResponse fields">
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Field</strong></TableCell>
+              <TableCell><strong>Type</strong></TableCell>
+              <TableCell><strong>Description</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {[
+              { field: "message", type: "string", description: "A response message from the server." },
+              { field: "success", type: "bool", description: "Indicates if the operation was successful." },
+              { field: "token", type: "string", description: "The retrieved token associated with the entity for the specified platform." },
+            ].map(({ field, type, description }) => (
+              <TableRow key={field}>
+                <TableCell>{field}</TableCell>
+                <TableCell>{type}</TableCell>
+                <TableCell>{description}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* Method */}
+      <Typography variant="h6" gutterBottom mt={4}>
+        Method
+      </Typography>
+      <Typography paragraph>
+        <code>method</code> <strong>GetEntityAccessToken</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The examples below use{" "}
+        <a href="https://github.com/fullstorydev/grpcurl#grpcurl" target="_blank" rel="noopener noreferrer">
+          grpcurl
+        </a>
+        .
+      </Alert>
+      <Alert severity="info" sx={{ mb: 3 }}>
+        Here is what a successful response from the server looks like.<br />
+        The server would return a status code of <code>0 OK</code> if the API transaction goes through without any friction. Otherwise, it will return any other code out of the{" "}
+        <a href="https://grpc.github.io/grpc/core/md_doc_statuscodes.html" target="_blank" rel="noopener noreferrer">
+          17 codes supported by gRPC
+        </a>.
+      </Alert>
+
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+        Sample request
+      </Typography>
+        <Box
+    component="pre"
+    sx={(theme) => ({
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.grey[100],
+      color: theme.palette.text.primary,
+      p: 2,
+      borderRadius: 2,
+      overflow: "auto",
+      fontFamily: "monospace",
+      fontSize: "0.875rem",
+    })}
+  >
+        {`grpcurl -plaintext \\
+    -d '{"device_id": "device_id", "platform": "gmail", "account_identifier": "sample@mail.com"}' \\
+    -proto protos/v1/vault.proto \\
+localhost:6000 vault.v1.Entity/GetEntityAccessToken`}
+      </Box>
+
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+        Sample response
+      </Typography>
+     <Box
+    component="pre"
+    sx={(theme) => ({
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.grey[100],
+      color: theme.palette.text.primary,
+      p: 2,
+      borderRadius: 2,
+      overflow: "auto",
+      fontFamily: "monospace",
+      fontSize: "0.875rem",
+    })}
+  >
+        {`{
+  "message": "Successfully fetched tokens",
+  "success": true,
+  "token": "retrieved_token"
+}`}
+      </Box>
+
+      {/* Decrypt Payload */}
+      <Typography variant="h4" gutterBottom mt={4}>
+        Decrypt Payload
+      </Typography>
+      <Typography paragraph>
+        This function handles decrypting payload content.
+      </Typography>
+      <hr />
+
+      {/* Request */}
+      <Typography variant="h6" gutterBottom mt={2}>
+        Request
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        <code>request</code> <strong>DecryptPayloadRequest</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The table lists only the required fields for this step. Other fields will be ignored.
+      </Alert>
+      <TableContainer component={Paper} sx={{ mb: 3 }}>
+        <Table size="small" aria-label="DecryptPayloadRequest required fields">
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Field</strong></TableCell>
+              <TableCell><strong>Type</strong></TableCell>
+              <TableCell><strong>Description</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {[
+              {
+                field: "device_id or phone_number",
+                type: "string",
+                description: "The unique identifier of the device or the phone number used by the entity.",
+              },
+              { field: "payload_ciphertext", type: "string", description: "The encrypted payload ciphertext that needs to be decrypted." },
+            ].map(({ field, type, description }) => (
+              <TableRow key={field}>
+                <TableCell>{field}</TableCell>
+                <TableCell>{type}</TableCell>
+                <TableCell>{description}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* Response */}
+      <Typography variant="h6" gutterBottom mt={4}>
+        Response
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        <code>response</code> <strong>DecryptPayloadResponse</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The table lists only the fields that are populated for this step. Other fields may be empty, omitted, or false.
+      </Alert>
+      <TableContainer component={Paper} sx={{ mb: 3 }}>
+        <Table size="small" aria-label="DecryptPayloadResponse fields">
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Field</strong></TableCell>
+              <TableCell><strong>Type</strong></TableCell>
+              <TableCell><strong>Description</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {[
+              { field: "message", type: "string", description: "A response message from the server." },
+              { field: "success", type: "bool", description: "Indicates if the operation was successful." },
+              { field: "payload_plaintext", type: "string", description: "The decrypted payload plaintext." },
+            ].map(({ field, type, description }) => (
+              <TableRow key={field}>
+                <TableCell>{field}</TableCell>
+                <TableCell>{type}</TableCell>
+                <TableCell>{description}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* Method */}
+      <Typography variant="h6" gutterBottom mt={4}>
+        Method
+      </Typography>
+      <Typography paragraph>
+        <code>method</code> <strong>DecryptPayload</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The examples below use{" "}
+        <a href="https://github.com/fullstorydev/grpcurl#grpcurl" target="_blank" rel="noopener noreferrer">
+          grpcurl
+        </a>
+        .
+      </Alert>
+      <Alert severity="info" sx={{ mb: 3 }}>
+        Here is what a successful response from the server looks like.<br />
+        The server would return a status code of <code>0 OK</code> if the API transaction goes through without any friction. Otherwise, it will return any other code out of the{" "}
+        <a href="https://grpc.github.io/grpc/core/md_doc_statuscodes.html" target="_blank" rel="noopener noreferrer">
+          17 codes supported by gRPC
+        </a>.
+      </Alert>
+
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+        Sample request
+      </Typography>
+      <Box
+    component="pre"
+    sx={(theme) => ({
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.grey[100],
+      color: theme.palette.text.primary,
+      p: 2,
+      borderRadius: 2,
+      overflow: "auto",
+      fontFamily: "monospace",
+      fontSize: "0.875rem",
+    })}
+  >
+        {`grpcurl -plaintext \\
+    -d '{"device_id": "device_id", "payload_ciphertext": "encrypted_payload"}' \\
+    -proto protos/v1/vault.proto \\
+localhost:6000 vault.v1.Entity/DecryptPayload`}
+      </Box>
+
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+        Sample response
+      </Typography>
+  <Box
+    component="pre"
+    sx={(theme) => ({
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.grey[100],
+      color: theme.palette.text.primary,
+      p: 2,
+      borderRadius: 2,
+      overflow: "auto",
+      fontFamily: "monospace",
+      fontSize: "0.875rem",
+    })}
+  >
+        {`{
+  "message": "Successfully decrypted payload",
+  "success": true,
+  "payload_plaintext": "Decrypted payload content"
+}`}
+      </Box>
+
+      {/* Encrypt Payload */}
+      <Typography variant="h4" gutterBottom mt={4}>
+        Encrypt Payload
+      </Typography>
+      <Typography paragraph>
+        This function handles the encryption of payload content.
+      </Typography>
+      <hr />
+
+      {/* Request */}
+      <Typography variant="h6" gutterBottom mt={2}>
+        Request
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        <code>request</code> <strong>EncryptPayloadRequest</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The table lists only the required fields for this step. Other fields will be ignored.
+      </Alert>
+      <TableContainer component={Paper} sx={{ mb: 3 }}>
+        <Table size="small" aria-label="EncryptPayloadRequest required fields">
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Field</strong></TableCell>
+              <TableCell><strong>Type</strong></TableCell>
+              <TableCell><strong>Description</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {[
+              { field: "device_id", type: "string", description: "The unique identifier of the device used by the entity." },
+              { field: "payload_plaintext", type: "string", description: "The plaintext payload content to be encrypted." },
+            ].map(({ field, type, description }) => (
+              <TableRow key={field}>
+                <TableCell>{field}</TableCell>
+                <TableCell>{type}</TableCell>
+                <TableCell>{description}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* Response */}
+      <Typography variant="h6" gutterBottom mt={4}>
+        Response
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        <code>response</code> <strong>EncryptPayloadResponse</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The table lists only the fields that are populated for this step. Other fields may be empty, omitted, or false.
+      </Alert>
+      <TableContainer component={Paper} sx={{ mb: 3 }}>
+        <Table size="small" aria-label="EncryptPayloadResponse fields">
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Field</strong></TableCell>
+              <TableCell><strong>Type</strong></TableCell>
+              <TableCell><strong>Description</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {[
+              { field: "message", type: "string", description: "A response message from the server." },
+              { field: "payload_ciphertext", type: "string", description: "The encrypted payload ciphertext." },
+              { field: "success", type: "bool", description: "Indicates if the operation was successful." },
+            ].map(({ field, type, description }) => (
+              <TableRow key={field}>
+                <TableCell>{field}</TableCell>
+                <TableCell>{type}</TableCell>
+                <TableCell>{description}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* Method */}
+      <Typography variant="h6" gutterBottom mt={4}>
+        Method
+      </Typography>
+      <Typography paragraph>
+        <code>method</code> <strong>EncryptPayload</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The examples below use{" "}
+        <a href="https://github.com/fullstorydev/grpcurl#grpcurl" target="_blank" rel="noopener noreferrer">
+          grpcurl
+        </a>
+        .
+      </Alert>
+      <Alert severity="info" sx={{ mb: 3 }}>
+        Here is what a successful response from the server looks like.<br />
+        The server would return a status code of <code>0 OK</code> if the API transaction goes through without any friction. Otherwise, it will return any other code out of the{" "}
+        <a href="https://grpc.github.io/grpc/core/md_doc_statuscodes.html" target="_blank" rel="noopener noreferrer">
+          17 codes supported by gRPC
+        </a>.
+      </Alert>
+
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+        Sample request
+      </Typography>
+      <Box
+    component="pre"
+    sx={(theme) => ({
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.grey[100],
+      color: theme.palette.text.primary,
+      p: 2,
+      borderRadius: 2,
+      overflow: "auto",
+      fontFamily: "monospace",
+      fontSize: "0.875rem",
+    })}
+  >
+        {`grpcurl -plaintext \\
+    -d '{"device_id": "device_id", "payload_plaintext": "plaintext_payload"}' \\
+    -proto protos/v1/vault.proto \\
+localhost:6000 vault.v1.Entity/EncryptPayload`}
+      </Box>
+
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+        Sample response
+      </Typography>
+     <Box
+    component="pre"
+    sx={(theme) => ({
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.grey[100],
+      color: theme.palette.text.primary,
+      p: 2,
+      borderRadius: 2,
+      overflow: "auto",
+      fontFamily: "monospace",
+      fontSize: "0.875rem",
+    })}
+  >
+        {`{
+  "message": "Successfully encrypted payload.",
+  "payload_ciphertext": "encrypted_payload",
+  "success": true
+}`}
+      </Box>
+
+      {/* Update An Entity's Token */}
+      <Typography variant="h4" gutterBottom mt={4}>
+        Update An Entity's Token
+      </Typography>
+      <Typography paragraph>
+        This function updates tokens associated with an entity.
+      </Typography>
+      <hr />
+
+      {/* Request */}
+      <Typography variant="h6" gutterBottom mt={2}>
+        Request
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        <code>request</code> <strong>UpdateEntityTokenRequest</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The table lists only the required fields for this step. Other fields will be ignored.
+      </Alert>
+      <TableContainer component={Paper} sx={{ mb: 3 }}>
+        <Table size="small" aria-label="UpdateEntityTokenRequest required fields">
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Field</strong></TableCell>
+              <TableCell><strong>Type</strong></TableCell>
+              <TableCell><strong>Description</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {[
+              {
+                field: "device_id or phone_number",
+                type: "string",
+                description: "The unique identifier of the device or the phone number used by the entity.",
+              },
+              { field: "token", type: "string", description: "The new token to be updated for the entity." },
+              { field: "platform", type: "string", description: 'The platform from which the token is being updated. (e.g., "gmail").' },
+              { field: "account_identifier", type: "string", description: "The identifier of the account associated with the token." },
+            ].map(({ field, type, description }) => (
+              <TableRow key={field}>
+                <TableCell>{field}</TableCell>
+                <TableCell>{type}</TableCell>
+                <TableCell>{description}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* Response */}
+      <Typography variant="h6" gutterBottom mt={4}>
+        Response
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        <code>response</code> <strong>UpdateEntityTokenResponse</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The table lists only the fields that are populated for this step. Other fields may be empty, omitted, or false.
+      </Alert>
+      <TableContainer component={Paper} sx={{ mb: 3 }}>
+        <Table size="small" aria-label="UpdateEntityTokenResponse fields">
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Field</strong></TableCell>
+              <TableCell><strong>Type</strong></TableCell>
+              <TableCell><strong>Description</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {[
+              { field: "message", type: "string", description: "A response message from the server." },
+              { field: "success", type: "bool", description: "Indicates if the operation was successful." },
+            ].map(({ field, type, description }) => (
+              <TableRow key={field}>
+                <TableCell>{field}</TableCell>
+                <TableCell>{type}</TableCell>
+                <TableCell>{description}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* Method */}
+      <Typography variant="h6" gutterBottom mt={4}>
+        Method
+      </Typography>
+      <Typography paragraph>
+        <code>method</code> <strong>UpdateEntityToken</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The examples below use{" "}
+        <a href="https://github.com/fullstorydev/grpcurl#grpcurl" target="_blank" rel="noopener noreferrer">
+          grpcurl
+        </a>
+        .
+      </Alert>
+      <Alert severity="info" sx={{ mb: 3 }}>
+        Here is what a successful response from the server looks like.<br />
+        The server would return a status code of <code>0 OK</code> if the API transaction goes through without any friction. Otherwise, it will return any other code out of the{" "}
+        <a href="https://grpc.github.io/grpc/core/md_doc_statuscodes.html" target="_blank" rel="noopener noreferrer">
+          17 codes supported by gRPC
+        </a>.
+      </Alert>
+
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+        Sample request
+      </Typography>
+       <Box
+    component="pre"
+    sx={(theme) => ({
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.grey[100],
+      color: theme.palette.text.primary,
+      p: 2,
+      borderRadius: 2,
+      overflow: "auto",
+      fontFamily: "monospace",
+      fontSize: "0.875rem",
+    })}
+  >
+        {`grpcurl -plaintext \\
+    -d '{"device_id": "device_id", "token": "new_token", "platform": "gmail", "account_identifier": "sample@mail.com"}' \\
+    -proto protos/v1/vault.proto \\
+localhost:6000 vault.v1.Entity/UpdateEntityToken`}
+      </Box>
+
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+        Sample response
+      </Typography>
+  <Box
+    component="pre"
+    sx={(theme) => ({
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.grey[100],
+      color: theme.palette.text.primary,
+      p: 2,
+      borderRadius: 2,
+      overflow: "auto",
+      fontFamily: "monospace",
+      fontSize: "0.875rem",
+    })}
+  >
+        {`{
+  "message": "Token updated successfully.",
+  "success": true
+}`}
+      </Box>
+
+      {/* Delete An Entity's Token */}
+      <Typography variant="h4" gutterBottom mt={4}>
+        Delete An Entity's Token
+      </Typography>
+      <Typography paragraph>
+        This function deletes tokens associated with an entity.
+      </Typography>
+      <hr />
+
+      {/* Request */}
+      <Typography variant="h6" gutterBottom mt={2}>
+        Request
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        <code>request</code> <strong>DeleteEntityTokenRequest</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The table lists only the required fields for this step. Other fields will be ignored.
+      </Alert>
+      <TableContainer component={Paper} sx={{ mb: 3 }}>
+        <Table size="small" aria-label="DeleteEntityTokenRequest required fields">
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Field</strong></TableCell>
+              <TableCell><strong>Type</strong></TableCell>
+              <TableCell><strong>Description</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {[
+              { field: "long_lived_token", type: "string", description: "The long-lived token for the authenticated session." },
+              { field: "platform", type: "string", description: 'The platform from which the token is being updated. (e.g., "gmail").' },
+              { field: "account_identifier", type: "string", description: "The identifier of the account associated with the token." },
+            ].map(({ field, type, description }) => (
+              <TableRow key={field}>
+                <TableCell>{field}</TableCell>
+                <TableCell>{type}</TableCell>
+                <TableCell>{description}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* Response */}
+      <Typography variant="h6" gutterBottom mt={4}>
+        Response
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        <code>response</code> <strong>DeleteEntityTokenResponse</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The table lists only the fields that are populated for this step. Other fields may be empty, omitted, or false.
+      </Alert>
+      <TableContainer component={Paper} sx={{ mb: 3 }}>
+        <Table size="small" aria-label="DeleteEntityTokenResponse fields">
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>Field</strong></TableCell>
+              <TableCell><strong>Type</strong></TableCell>
+              <TableCell><strong>Description</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {[
+              { field: "message", type: "string", description: "A response message from the server." },
+              { field: "success", type: "bool", description: "Indicates if the operation was successful." },
+            ].map(({ field, type, description }) => (
+              <TableRow key={field}>
+                <TableCell>{field}</TableCell>
+                <TableCell>{type}</TableCell>
+                <TableCell>{description}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* Method */}
+      <Typography variant="h6" gutterBottom mt={4}>
+        Method
+      </Typography>
+      <Typography paragraph>
+        <code>method</code> <strong>DeleteEntityToken</strong>
+      </Typography>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        The examples below use{" "}
+        <a href="https://github.com/fullstorydev/grpcurl#grpcurl" target="_blank" rel="noopener noreferrer">
+          grpcurl
+        </a>
+        .
+      </Alert>
+      <Alert severity="info" sx={{ mb: 3 }}>
+        Here is what a successful response from the server looks like.<br />
+        The server would return a status code of <code>0 OK</code> if the API transaction goes through without any friction. Otherwise, it will return any other code out of the{" "}
+        <a href="https://grpc.github.io/grpc/core/md_doc_statuscodes.html" target="_blank" rel="noopener noreferrer">
+          17 codes supported by gRPC
+        </a>.
+      </Alert>
+
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+        Sample request
+      </Typography>
+       <Box
+    component="pre"
+    sx={(theme) => ({
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.grey[100],
+      color: theme.palette.text.primary,
+      p: 2,
+      borderRadius: 2,
+      overflow: "auto",
+      fontFamily: "monospace",
+      fontSize: "0.875rem",
+    })}
+  >
+        {`grpcurl -plaintext \\
+    -d @ \\
+    -proto protos/v1/vault.proto \\
+localhost:6000 vault.v1.Entity/DeleteEntityToken <payload.json`}
+      </Box>
+
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+        Sample payload.json
+      </Typography>
+  <Box
+    component="pre"
+    sx={(theme) => ({
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.grey[100],
+      color: theme.palette.text.primary,
+      p: 2,
+      borderRadius: 2,
+      overflow: "auto",
+      fontFamily: "monospace",
+      fontSize: "0.875rem",
+    })}
+  >        {`{
+  "long_lived_token": "long_lived_token",
+  "platform": "gmail",
+  "account_identifier": "sample@mail.com"
+}`}
+      </Box>
+
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 5 }}>
+        Sample response
+      </Typography>
+  <Box
+    component="pre"
+    sx={(theme) => ({
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.grey[100],
+      color: theme.palette.text.primary,
+      p: 2,
+      borderRadius: 2,
+      overflow: "auto",
+      fontFamily: "monospace",
+      fontSize: "0.875rem",
+    })}
+  >        {`{
+  "message": "Token deleted successfully.",
+  "success": true
+}`}
+      </Box>
+   
+
 
       {/* Drawer */}
       <Drawer anchor="right" open={!!selectedNode} onClose={handleCloseDrawer}>
