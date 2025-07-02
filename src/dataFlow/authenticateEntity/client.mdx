@@ -1,4 +1,4 @@
-# 📱 Client Guide: Creating an Entity
+# Creating an Entity
 
 This guide explains how your client app (mobile or CLI) can create an entity in the RelaySMS Vault. 
 An **entity** represents a secure user identity tied to a phone number.
@@ -11,11 +11,11 @@ Creating an entity involves:
 
 ---
 
-## 🧩 Step 1: Initiate Entity Creation
+## Step 1: Initiate Entity Creation
 
 Your app must first initiate the creation request using the user's phone number and public keys.
 
-### 🔐 Required Fields
+### Required Fields
 
 | Field                    | Type    | Description                                                                  |
 |--------------------------|---------|------------------------------------------------------------------------------|
@@ -26,7 +26,7 @@ Your app must first initiate the creation request using the user's phone number 
 | `client_device_id_pub_key` | string | Base64-encoded X25519 public key for device identification                   |
 
 
-### ▶️ Example Payload
+### Example Payload
 
 ```json
 {
@@ -38,7 +38,7 @@ Your app must first initiate the creation request using the user's phone number 
 }
 ```
 
-### ✅ Expected Response
+### Expected Response
 
 ```json
 {
@@ -48,13 +48,13 @@ Your app must first initiate the creation request using the user's phone number 
 }
 ```
 
-> 📌 If requiresOwnershipProof is true, the user must enter the OTP sent via SMS.
+> If requiresOwnershipProof is true, the user must enter the OTP sent via SMS.
 
-### 🧾 Step 2: Complete Entity Creation
+### Step 2: Complete Entity Creation
 
 Once the user enters the OTP, your app must submit the final entity creation request.
 
-### ▶️ Sample Request Payload
+### Sample Request Payload
 
 ``` json
 {
@@ -67,7 +67,7 @@ Once the user enters the OTP, your app must submit the final entity creation req
 }
 ```
 
-### ✅ Sample Response
+### Sample Response
 
 ```json
 {
@@ -78,17 +78,17 @@ Once the user enters the OTP, your app must submit the final entity creation req
 }
 ```
 
-### 🎯 After Successful Creation
+### After Successful Creation
 
 Your client app should:
 
-- 🔐 Securely store the longLivedToken (e.g., encrypted local storage)
+- Securely store the longLivedToken (e.g., encrypted local storage)
 
-- 📦 Cache the serverPublishPubKey and serverDeviceIdPubKey for secure communication
+- Cache the serverPublishPubKey and serverDeviceIdPubKey for secure communication
 
-- 📲 Redirect the user to the app’s main screen or dashboard
+- Redirect the user to the app’s main screen or dashboard
 
-### 🛡️ Best Practices
+### Best Practices
 
 - Never send private keys to the server
 
@@ -98,7 +98,7 @@ Your client app should:
 
 - Use a secure random generator for key generation.
 
-### 🧪 Optional: CLI Test with grpcurl
+### Optional: CLI Test with grpcurl
 
 ``` json
 grpcurl -plaintext \
@@ -107,7 +107,7 @@ grpcurl -plaintext \
   localhost:6000 vault.v1.Entity/CreateEntity < payload.json
 ```
 
-### 📚 Related Resources
+### Related Resources
 
 - [RelaySMS Android](https://github.com/smswithoutborders/RelaySMS-Android)
 
