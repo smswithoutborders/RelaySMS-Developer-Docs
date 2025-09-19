@@ -1,40 +1,23 @@
-## 🧩 Publisher
-
 **Publisher** is the middleware layer that connects the **Gateway Server** to the **RelaySMS (SMSWithoutBorders) backend**.  
-It plays a critical role in securely relaying and translating user intentions—sent via SMS—into valid, authenticated requests to online platforms like Gmail, Twitter, and Telegram.
+It plays a critical role in securely relaying and translating user intentions sent via SMS into valid, authenticated requests to online platforms like Gmail, Twitter, and Telegram.
 
 ---
 
-### 🔄 What Does Publisher Do?
+### What Does Publisher Do?
 
 The Publisher acts as a **secure interpreter** and **executor**:
 
-1. ✅ Receives SMS-based command payloads from the Gateway Server
-2. 🤝 Performs a secure handshake with the backend to validate the request
-3. 🔐 Decrypts the OAuth2 tokens stored in encrypted Vaults
-4. 📡 Uses the decrypted tokens to make authorized API calls on behalf of the user
-5. 📥 Returns the response to be sent back via SMS through the gateway
+1.  Receives SMS-based command payloads from the Gateway Server
+2.  Performs a secure handshake with the backend to validate the request
+3.  Decrypts the OAuth2 tokens stored in encrypted Vaults
+4.  Uses the decrypted tokens to make authorized API calls on behalf of the user
+5.  Returns the response to be sent back via SMS through the gateway
 
 This makes it possible for users with **no internet connection** to interact with cloud-based platforms **using only SMS**.
 
 ---
 
-### 🚀 Use Case: Publishing via SMS
-
-A user without internet sends an SMS formatted command to a gateway client.  
-That SMS reaches the Publisher, which:
-
-- Authenticates the user via token signature
-- Decrypts their token from a secure vault
-- Sends the command (e.g., "Tweet this text" or "Send Gmail") to the respective platform
-- Retrieves the response (e.g., “Tweet posted!”)
-- Sends it back to the user via SMS
-
-All of this happens within seconds, transparently and securely.
-
----
-
-### 🔐 Security & Trust
+### Security & Trust
 
 Publisher enforces:
 
@@ -44,12 +27,12 @@ Publisher enforces:
 
 ---
 
-### 📚 Learn More
+### Learn More
 
-- 🧠 [How the Publisher Works](https://github.com/smswithoutborders/RelaySMS-Publisher/blob/main/docs/grpc.md)
-- 🔐 [Content and Payload Specification](https://github.com/smswithoutborders/RelaySMS-Publisher/blob/main/docs/grpc.md)
-- ⚙️ [REST API Documentation](https://publisher.smswithoutborders.com/docs)
+[![How the Publisher Works](https://img.shields.io/badge/⚙️_How_It_Works-Publisher_Guide-green?style=for-the-badge)](https://github.com/smswithoutborders/RelaySMS-Publisher/blob/main/docs/grpc.md)
+
+[![Content and Payload Specification](https://img.shields.io/badge/📋_Payload-Specification-orange?style=for-the-badge)](https://github.com/smswithoutborders/RelaySMS-Publisher/blob/main/docs/grpc.md)
+
+[![REST API Documentation](https://img.shields.io/badge/🔌_API-Documentation-purple?style=for-the-badge)](https://publisher.smswithoutborders.com/docs)
 
 ---
-
-> ✨ **Fun Fact:** With RelaySMS Publisher, users can post to Twitter or send a Gmail just by sending an SMS—no apps, no data required.

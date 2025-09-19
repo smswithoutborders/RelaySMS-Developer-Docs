@@ -51,28 +51,12 @@ const nodes = [
     style: { width: 120, background: "#f3e5f5" },
   },
   {
-    id: "Gmail",
-    data: { label: "Gmail" },
-    position: { x: 940, y: 40 },
+    id: "Platforms",
+    data: { label: "Platforms" },
+    position: { x: 940, y: 120 },
     targetPosition: "left",
     sourcePosition: "right",
-    style: { width: 120, background: "#fce4ec" },
-  },
-  {
-    id: "Twitter",
-    data: { label: "Twitter" },
-    position: { x: 940, y: 100 },
-      targetPosition: "left",
-    sourcePosition: "right",
-    style: { width: 120, background: "#e1f5fe" },
-  },
-  {
-    id: "Telegram",
-    data: { label: "Telegram" },
-    position: { x: 940, y: 160 },
-     targetPosition: "left",
-    sourcePosition: "right",
-    style: { width: 120, background: "#e0f2f1" },
+    style: { width: 120, background: "#e3f2fd" },
   },
   {
     id: "EmailBridge",
@@ -140,21 +124,8 @@ const edges = [
   {
     id: "e9",
     source: "Publisher",
-    target: "Gmail",
-    animated: true,
-    markerEnd: { type: "arrowclosed", width: 20, height: 20 },
-  },
-  {
-    id: "e10",
-    source: "Publisher",
-    target: "Twitter",
-    animated: true,
-    markerEnd: { type: "arrowclosed", width: 20, height: 20 },
-  },
-  {
-    id: "e11",
-    source: "Publisher",
-    target: "Telegram",
+    target: "Platforms",
+    label: "Content",
     animated: true,
     markerEnd: { type: "arrowclosed", width: 20, height: 20 },
   },
@@ -175,9 +146,7 @@ const nodeClickMap = {
   Publisher: "Publisher",
   BridgeServer: "BridgeServer",
   Vault: "Vault",
-  Gmail: "Gmail",
-  Twitter: "Twitter",
-  Telegram: "Telegram",
+  Platforms: "Platforms",
   EmailBridge: "EmailBridge"
 };
 

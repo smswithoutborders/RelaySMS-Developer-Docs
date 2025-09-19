@@ -1,0 +1,87 @@
+RelaySMS supports multiple messaging platforms through dedicated adapter implementations. Each adapter handles platform-specific authentication protocols and message delivery, providing a unified interface for seamless integration.
+
+## Supported Platforms
+
+### Gmail OAuth2 Adapter
+[![Gmail](https://img.shields.io/badge/Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](https://github.com/smswithoutborders/gmail-oauth2-adapter)
+
+**Authentication:** OAuth2 with PKCE  
+**Purpose:** Send emails through Gmail's API using secure OAuth2 authentication
+
+The Gmail adapter enables users to send emails via their Gmail accounts without exposing credentials. It implements OAuth2 with PKCE (Proof Key for Code Exchange) for enhanced security, handles token refresh automatically, and supports rich email formatting including attachments.
+
+**Key Features:**
+- Secure OAuth2 authentication flow
+- Automatic token refresh management  
+- Support for HTML and plain text emails
+- Attachment handling capabilities
+- Gmail API rate limiting compliance
+
+---
+
+### Twitter OAuth2 Adapter  
+[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://github.com/smswithoutborders/twitter-oauth2-adapter)
+
+**Authentication:** OAuth2 with PKCE  
+**Purpose:** Post tweets and manage Twitter interactions through OAuth2
+
+The Twitter adapter provides seamless integration with Twitter's API v2, enabling users to post tweets, manage threads, and interact with the platform while maintaining secure authentication through OAuth2 PKCE flow.
+
+**Key Features:**
+- OAuth2 PKCE authentication
+- Tweet posting and thread management
+- Media upload support
+- Character limit handling with auto-threading
+- Rate limiting and API quota management
+
+---
+
+### Mastodon OAuth2 Adapter
+[![Mastodon](https://img.shields.io/badge/Mastodon-563ACC?style=for-the-badge&logo=mastodon&logoColor=white)](https://github.com/smswithoutborders/mastodon-oauth2-adapter)
+
+**Authentication:** OAuth2  
+**Purpose:** Post to Mastodon instances with OAuth2 authentication
+
+The Mastodon adapter supports the decentralized Mastodon network, allowing users to post to any Mastodon instance. It handles the OAuth2 flow for various Mastodon servers and automatically manages message threading for longer content.
+
+**Key Features:**
+- Multi-instance Mastodon support
+- OAuth2 authentication for any Mastodon server
+- Automatic message chunking for character limits
+- Thread creation for long messages
+- Client application registration automation
+
+---
+
+### Telegram PNBA Adapter
+[![Telegram](https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://github.com/smswithoutborders/telegram-pnba-adapter)
+
+**Authentication:** PNBA (Phone Number-Based Authentication)  
+**Purpose:** Send Telegram messages using phone number authentication
+
+The Telegram adapter uses PNBA (Phone Number-Based Authentication) through Telegram's MTProto protocol. It manages session persistence, handles two-factor authentication, and provides direct message delivery through Telegram's client API.
+
+**Key Features:**
+- Phone number-based authentication
+- Two-step verification support
+- Session management and persistence
+- Direct message sending capabilities
+- Interactive CLI for testing and management
+
+## Technical Architecture
+
+All adapters follow a standardized protocol interface that defines:
+
+- **Authentication methods** (OAuth2 or PNBA)
+- **Message sending capabilities**
+- **Token/session management**  
+- **Error handling and recovery**
+- **Inter-process communication (IPC)**
+
+This unified approach ensures consistent behavior across platforms while accommodating each platform's unique authentication and API requirements.
+
+## Integration
+
+These adapters integrate seamlessly with the RelaySMS Publisher, providing users with multiple messaging options while maintaining security and reliability. Each adapter can be configured independently and supports both standalone CLI usage and programmatic integration.
+
+For detailed implementation guides and API documentation, visit the individual adapter repositories linked above.
