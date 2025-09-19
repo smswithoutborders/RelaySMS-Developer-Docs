@@ -79,7 +79,7 @@ jobs:
             echo "🚀 Fetching all branches ..."
             echo "============================"
             cd ${{ secrets.PROJECT_PATH }}
-            if ! git fetch --all; then
+            if ! git fetch origin; then
               echo "❌ Error fetching branches!"
               exit 1
             fi
@@ -88,20 +88,9 @@ jobs:
             echo "==============================="
 
             echo "============================"
-            echo "🚀 Switching to build/staging branch ..."
-            echo "============================"
-            if ! git checkout build/staging; then
-              echo "❌ Error switching to build/staging branch!"
-              exit 1
-            fi
-            echo "==============================="
-            echo "✅ Switched to build/staging branch"
-            echo "==============================="
-
-            echo "============================"
             echo "🚀 Updating repository ..."
             echo "============================"
-            if ! git pull; then
+            if ! git reset --hard origin/build/staging; then
               echo "❌ Error updating repository!"
               exit 1
             fi
