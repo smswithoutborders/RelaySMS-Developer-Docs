@@ -35,19 +35,16 @@ const nodeDescriptions = {
   },
   ExternalBridges: { title: "External Bridges", content: <ExternalBridge /> },
 };
-
 const PublishContent = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerContent, setDrawerContent] = useState(null);
   const [drawerTitle, setDrawerTitle] = useState("");
-
   const content = `{
   "content": "encoded_relay_sms_payload",
   "metadata": {
     "From": "+1234567890"
   }
 }`;
-
   const handleDrawerOpen = (key) => {
     const node = nodeDescriptions[key];
     if (node) {
@@ -56,7 +53,6 @@ const PublishContent = () => {
       setDrawerOpen(true);
     }
   };
-
   const handleDrawerClose = () => {
     setDrawerOpen(false);
     setDrawerContent(null);
