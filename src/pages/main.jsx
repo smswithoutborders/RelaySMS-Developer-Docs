@@ -7,13 +7,14 @@ import {
   Drawer,
   Alert,
 } from "@mui/material";
-import { ButtonContained, ButtonOutline } from "../components";
 import Client from "../documentations/client/index.mdx";
 import GatewayClient from "../documentations/gatewayClient/index.mdx";
 import GatewayServer from "../documentations/gatewayServer/index.mdx";
 import Publisher from "../documentations/publisher/index.mdx";
 import BridgeServer from "../documentations/bridgeServer/index.mdx";
 import Vault from "../documentations/vault/index.mdx";
+import Platforms from "../documentations/platforms/index.mdx";
+import EmailBridge from "../documentations/emailBridge/index.mdx";
 import Overview from "./overview";
 
 const Main = () => {
@@ -28,6 +29,8 @@ const Main = () => {
     GatewayClient: <GatewayClient />,
     GatewayServer: <GatewayServer />,
     BridgeServer: <BridgeServer />,
+    Platforms: <Platforms />,
+    EmailBridge: <EmailBridge />,
   };
 
   const handleDrawerOpen = (key) => {
@@ -46,7 +49,7 @@ const Main = () => {
     <Box>
       <Box
         sx={{
-          pt: { xs: 15, sm: 20, md: 20 },
+          pt: { xs: 15, sm: 20, md: 25 },
           my: "auto",
           alignContent: "center",
           textAlign: "center",
@@ -59,81 +62,28 @@ const Main = () => {
           sx={{
             fontWeight: "bold",
             fontSize: { xs: "2.5rem", sm: "4rem", md: "6rem" },
-            mb: 5,
+            mb: 10,
           }}
           className="header"
         >
-          RelaySMS Developer <br />
-          Documentation
+          RelaySMS System <br />
+          Architecture Overview
         </Typography>
 
         <hr />
 
         <Box sx={{ pt: 4 }}>
-          <Typography variant="h4" sx={{ mb: 1, fontWeight: "bold" }}>
-            System Architecture Overview
-          </Typography>
-          <Typography variant="body2" sx={{ mb: 2 }}>
+          <Typography variant="body1" sx={{ mb: 2, fontSize: "1.2rem", mx: {md: 6, xs: 2} }}>
             The diagram below illustrates the flow of messages and data between
             the main components of the RelaySMS, from client apps through
             gateways, servers, and external services.
           </Typography>
+          <Overview handleDrawerOpen={handleDrawerOpen} />
           <Alert severity="info">
             Tip: Click on a node in the diagram to view more information about
             that component.
           </Alert>
-          <Overview handleDrawerOpen={handleDrawerOpen} />
         </Box>
-      </Box>
-      <Box
-        id="instances"
-        sx={{
-          pt: { xs: 4, sm: 6, md: 30 },
-          my: 2,
-          alignContent: "center",
-          textAlign: "center",
-          mb: { xs: 6, md: 15, sm: 10, lg: 25 },
-          mx: { xs: 2, md: 15, sm: 10, lg: 25 },
-        }}
-      >
-        <Typography
-          variant="h4"
-          sx={{
-            fontWeight: "bold",
-          }}
-          className="header"
-        >
-          Data Flow Guides
-        </Typography>
-        <Typography variant="body1" sx={{ py: { md: 8, xs: 4 } }} wrap>
-          These guides will help you understand how to use the RelaySMS system
-          effectively. Each guide provides step-by-step instructions and code{" "}
-          <br />
-          examples to help you get started quickly.
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid size={{ md: 4, xs: 6 }}>
-            <ButtonOutline linkTo="/create-entity" text="Create Entity" />
-          </Grid>
-          <Grid size={{ md: 4, xs: 6 }}>
-            <ButtonOutline
-              linkTo="/authenticate-entity"
-              text="Authenticate Entity"
-            />
-          </Grid>
-          <Grid size={{ md: 4, xs: 6 }}>
-            <ButtonOutline linkTo="/store-token" text="Store Token" />
-          </Grid>
-          <Grid size={{ md: 4, xs: 6 }}>
-            <ButtonOutline linkTo="/publish-content" text="Publish Content" />
-          </Grid>
-          <Grid size={{ md: 4, xs: 6 }}>
-            <ButtonOutline linkTo="/telemetry" text="Telemetry" />
-          </Grid>
-          <Grid size={{ md: 4, xs: 6 }}>
-            <ButtonOutline linkTo="/reliability-test" text="Reliability Test" />
-          </Grid>
-        </Grid>
       </Box>
       <Drawer
         anchor="right"

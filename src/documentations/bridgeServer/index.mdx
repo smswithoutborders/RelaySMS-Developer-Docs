@@ -1,48 +1,43 @@
-## 🌉 Bridge Server
+The **Bridge Server** is a specialized component within the RelaySMS (SMSWithoutBorders) ecosystem that enables **secure, internet-free communication** with online platforms via SMS without creating an account or saving platforms. 
+This is achieved by creating an alias with the user’s phone number(your-number@relaysms.com)
 
-The **Bridge Server** is a specialized component within the RelaySMS (SMSWithoutBorders) ecosystem that enables **secure, internet-free communication** with online platforms via SMS.
-
-By acting as an intelligent relay, the Bridge allows users to authenticate and interact with cloud services like Gmail, Twitter, or Telegram—**entirely through encrypted SMS**—even in environments with **no data connectivity**.
-
----
-
-### 📡 What Is the Bridge?
+### What Is the Bridge?
 
 The Bridge is a technology designed to:
 
-- 🔒 Establish **secure handshakes** between users and online platforms using pre-shared keys or signatures  
-- 🔁 Enable **end-to-end encrypted message exchange** over standard SMS  
-- 🛰️ Bypass the need for internet on the user's device by routing messages through **Bridge Servers** that have internet access
+- Establish **secure handshakes** between users and online platforms using pre-shared keys or signatures
+- Enable **end-to-end encrypted message exchange** over standard SMS
+- Bypass the need for login/sign-up or savings platforms
 
-This effectively turns your basic phone into a powerful tool for interacting with the web—without ever opening a browser or app.
+This effectively turns your basic phone into a powerful tool for interacting with online platforms without logging in or saving platforms.
 
 ---
 
-### ⚙️ How It Works
+### How It Works
 
-1. A user sends an SMS command (e.g., "Send Email", "Post Tweet") formatted for Bridge handling  
-2. The message is encrypted and signed on the user’s device  
-3. It is routed via a Gateway Client to the **Bridge Server**  
-4. The Bridge authenticates the payload and decrypts the message  
-5. It executes the request online using the stored tokens via the Publisher module  
+1. A user sends an SMS command (e.g., "Send Email") formatted for Bridge handling
+2. The message is encrypted and signed on the user’s device
+3. It is routed via a Gateway Client to the **Bridge Server**
+4. The Bridge authenticates the payload and decrypts the message
+5. It executes the request online using the stored tokens via the Publisher module
 6. The result is encrypted and sent back to the user through SMS
 
 ---
 
-### 🧰 Features
+### Features
 
-- 🔐 **Full encryption** of messages (both directions)  
-- 📲 **Platform-agnostic** – supports various cloud APIs (Gmail, Twitter, Telegram)  
-- 🌍 **Offline-first** – designed for users with unreliable or no internet  
-- 🔁 **Bridge Routing** – based on available bridges listed in [`bridges.json`](https://github.com/smswithoutborders/RelaySMS-Bridge-Server/blob/main/resources/bridges.json)
-
----
-
-### 📚 Learn More
-
-- 🧭 [Bridge Specification](https://github.com/smswithoutborders/RelaySMS-Bridge-Server/blob/main/docs/specifications.md)  
-- 📁 [Supported Bridge Platforms (`bridges.json`)](https://github.com/smswithoutborders/RelaySMS-Bridge-Server/blob/main/resources/bridges.json)
+- **Full encryption** of messages (both directions)
+- **Offline-first** – designed for users with unreliable or no internet
+- **Bridge Routing** – based on available bridges listed in [`bridges.json`](https://github.com/smswithoutborders/RelaySMS-Bridge-Server/blob/main/resources/bridges.json)
 
 ---
 
-> ✨ **Did You Know?** The Bridge lets users post on Twitter or send emails with nothing but a feature phone and a signal bar—no apps, no data plan needed.
+### Learn More
+
+[![Bridge Specification](https://img.shields.io/badge/🌉_Bridge-Specification-teal?style=for-the-badge&logo=github)](https://github.com/smswithoutborders/RelaySMS-Bridge-Server/blob/main/docs/specifications.md)
+
+[![Supported Bridge Platforms](https://img.shields.io/badge/🔗_Platforms-bridges.json-coral?style=for-the-badge&logo=github)](https://github.com/smswithoutborders/RelaySMS-Bridge-Server/blob/main/resources/bridges.json)
+
+---
+
+> **Did You Know?** The Bridge lets users post on Twitter or send emails with nothing but a feature phone and a signal bar—no apps, no data plan needed.

@@ -7,14 +7,18 @@ import {
   Drawer,
   Button,
 } from "@mui/material";
-import { CloseCircleOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
+import {
+  CloseCircleOutlined,
+  LeftOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
 import Publisher from "../dataFlow/publishContent/publisher.mdx";
 import Client from "../dataFlow/publishContent/client.mdx";
 import GatewayClient from "../dataFlow/publishContent/gatewayClient.mdx";
 import GatewayServer from "../dataFlow/publishContent/gatewayServer.mdx";
 import BridgeServer from "../dataFlow/publishContent/bridgeServer.mdx";
 import Vault from "../dataFlow/publishContent/vault.mdx";
-import ExternalPlatforms from "../dataFlow/publishContent/bridgePlatforms.mdx"
+import ExternalPlatforms from "../dataFlow/publishContent/bridgePlatforms.mdx";
 import ExternalBridge from "../dataFlow/publishContent/platforms.mdx";
 import Overview from "./overview";
 
@@ -25,7 +29,10 @@ const nodeDescriptions = {
   Publisher: { title: "Publisher", content: <Publisher /> },
   BridgeServer: { title: "Bridge Server", content: <BridgeServer /> },
   Vault: { title: "Vault", content: <Vault /> },
-  ExternalPlatforms: { title: "External Platforms", content: <ExternalPlatforms /> },
+  ExternalPlatforms: {
+    title: "External Platforms",
+    content: <ExternalPlatforms />,
+  },
   ExternalBridges: { title: "External Bridges", content: <ExternalBridge /> },
 };
 
@@ -58,8 +65,18 @@ const PublishContent = () => {
 
   return (
     <Box>
-      <Box sx={{ pt: { xs: 15, sm: 20, md: 15 }, textAlign: "center", mx: { xs: 2, md: 15, sm: 10, lg: 25 } }}>
-        <Typography variant="h1" fontWeight="bold" fontSize={{ xs: "3rem", sm: "4rem", md: "6rem" }}>
+      <Box
+        sx={{
+          pt: { xs: 15, sm: 20, md: 15 },
+          textAlign: "center",
+          mx: { xs: 2, md: 15, sm: 10, lg: 25 },
+        }}
+      >
+        <Typography
+          variant="h1"
+          fontWeight="bold"
+          fontSize={{ xs: "3rem", sm: "4rem", md: "6rem" }}
+        >
           Publish Content
         </Typography>
         <Typography variant="h6" sx={{ py: { md: 8, xs: 4 } }}>
@@ -67,13 +84,23 @@ const PublishContent = () => {
         </Typography>
       </Box>
 
-      <Box sx={{ textAlign: "center", mx: { xs: 2, md: 15, sm: 10, lg: 25 }, mb: { xs: 6, md: 15 } }}>
+      <Box
+        sx={{
+          textAlign: "center",
+          mx: { xs: 2, md: 15, sm: 10, lg: 25 },
+          mb: { xs: 6, md: 15 },
+        }}
+      >
         <Overview handleDrawerOpen={handleDrawerOpen} />
       </Box>
 
       <Box sx={{ mx: { xs: 2, md: 15 }, my: 3, mb: 10 }}>
         <Typography variant="h6">Sample payload.json</Typography>
-        <pre style={{ margin: 0, whiteSpace: "pre-wrap", wordBreak: "break-word" }}>{content}</pre>
+        <pre
+          style={{ margin: 0, whiteSpace: "pre-wrap", wordBreak: "break-word" }}
+        >
+          {content}
+        </pre>
       </Box>
 
       <Drawer
@@ -92,46 +119,6 @@ const PublishContent = () => {
         </Box>
         <Box mt={2}>{drawerContent}</Box>
       </Drawer>
-
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          mx: { xs: 2, md: 15 },
-          my: 5,
-        }}
-      >
-        <Button
-          variant="text"
-          component="a"
-          href="/store-token"
-          startIcon={<LeftOutlined />}
-          sx={{
-            textDecoration: "underline",
-            fontWeight: "bold",
-            fontSize: { md: "1rem", xs: "0.8rem" },
-            color: "primary.main",
-            "&:hover": { textDecoration: "none" },
-          }}
-        >
-          Back to Store Token
-        </Button>
-        <Button
-          variant="text"
-          component="a"
-          href="/telemetry-docs"
-          endIcon={<RightOutlined />}
-          sx={{
-            textDecoration: "underline",
-            fontWeight: "bold",
-            fontSize: { md: "1rem", xs: "0.8rem" },
-            color: "primary.main",
-            "&:hover": { textDecoration: "none" },
-          }}
-        >
-          Continue to Telemetry
-        </Button>
-      </Box>
     </Box>
   );
 };
