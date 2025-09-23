@@ -12,14 +12,14 @@ import {
   LeftOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import Publisher from "../dataFlow/publishContent/publisher.mdx";
-import Client from "../dataFlow/publishContent/client.mdx";
-import GatewayClient from "../dataFlow/publishContent/gatewayClient.mdx";
-import GatewayServer from "../dataFlow/publishContent/gatewayServer.mdx";
-import BridgeServer from "../dataFlow/publishContent/bridgeServer.mdx";
-import Vault from "../dataFlow/publishContent/vault.mdx";
-import ExternalPlatforms from "../dataFlow/publishContent/bridgePlatforms.mdx";
-import ExternalBridge from "../dataFlow/publishContent/platforms.mdx";
+import Client from "../documentations/client/index.mdx";
+import GatewayClient from "../documentations/gatewayClient/index.mdx";
+import GatewayServer from "../documentations/gatewayServer/index.mdx";
+import Publisher from "../documentations/publisher/index.mdx";
+import BridgeServer from "../documentations/bridgeServer/index.mdx";
+import Vault from "../documentations/vault/index.mdx";
+import ExternalPlatforms from "../documentations/platforms/index.mdx";
+import ExternalBridge from "../documentations/emailBridge/index.mdx";
 import Overview from "./overview";
 
 const nodeDescriptions = {
@@ -39,12 +39,7 @@ const PublishContent = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerContent, setDrawerContent] = useState(null);
   const [drawerTitle, setDrawerTitle] = useState("");
-  const content = `{
-  "content": "encoded_relay_sms_payload",
-  "metadata": {
-    "From": "+1234567890"
-  }
-}`;
+
   const handleDrawerOpen = (key) => {
     const node = nodeDescriptions[key];
     if (node) {
@@ -88,15 +83,6 @@ const PublishContent = () => {
         }}
       >
         <Overview handleDrawerOpen={handleDrawerOpen} />
-      </Box>
-
-      <Box sx={{ mx: { xs: 2, md: 15 }, my: 3, mb: 10 }}>
-        <Typography variant="h6">Sample payload.json</Typography>
-        <pre
-          style={{ margin: 0, whiteSpace: "pre-wrap", wordBreak: "break-word" }}
-        >
-          {content}
-        </pre>
       </Box>
 
       <Drawer
