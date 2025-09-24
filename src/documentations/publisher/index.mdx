@@ -1,38 +1,23 @@
-**Publisher** is the middleware layer that connects the **Gateway Server** to the **RelaySMS (SMSWithoutBorders) backend**.  
-It plays a critical role in securely relaying and translating user intentions sent via SMS into valid, authenticated requests to online platforms like Gmail, Twitter, and Telegram.
+import ButtonContained from "../../components/buttonContained.jsx";
 
----
+## Description
 
-### What Does Publisher Do?
+Publisher executes platform requests by retrieving tokens from the Vault and calling platform APIs (Gmail, Twitter, etc.) to publish content on behalf of users.
 
-The Publisher acts as a **secure interpreter** and **executor**:
+## How It Works
 
-1.  Receives SMS-based command payloads from the Gateway Server
-2.  Performs a secure handshake with the backend to validate the request
-3.  Decrypts the OAuth2 tokens stored in encrypted Vaults
-4.  Uses the decrypted tokens to make authorized API calls on behalf of the user
-5.  Returns the response to be sent back via SMS through the gateway
+The Publisher acts as the execution engine that connects to various social media platforms using stored user credentials. It receives publishing requests, determines the target platform, and handles the actual API calls to deliver content.
 
-This makes it possible for users with **no internet connection** to interact with cloud-based platforms **using only SMS**.
+- Gateway Server sends publishing request to Publisher
+- Publisher determines the target platform for the message
+- Publisher sends message content to Vault to be decrypted
+- Publisher requests user's tokens from Vault
+- If user has sent their tokens, Vault decrypts and sends them to Publisher
+- Publisher uses tokens to call the appropriate platform API on user's behalf
+- Publisher delivers the message to the determined platform
+- Publisher sends back the delivery status to the user via SMS
 
----
-
-### Security & Trust
-
-Publisher enforces:
-
-- **Vault-Based Token Storage**: OAuth2 tokens are never exposed; they are encrypted at rest.
-- **Request Signing & Verification**: All commands are signed and validated to prevent spoofing.
-- **Least Privilege**: Requests are made only with the minimum required scopes.
-
----
-
-### Learn More
-
-[![How the Publisher Works](https://img.shields.io/badge/⚙️_How_It_Works-Publisher_Guide-green?style=for-the-badge)](https://github.com/smswithoutborders/RelaySMS-Publisher/blob/main/docs/grpc.md)
-
-[![Content and Payload Specification](https://img.shields.io/badge/📋_Payload-Specification-orange?style=for-the-badge)](https://github.com/smswithoutborders/RelaySMS-Publisher/blob/main/docs/grpc.md)
-
-[![REST API Documentation](https://img.shields.io/badge/🔌_API-Documentation-purple?style=for-the-badge)](https://publisher.smswithoutborders.com/docs)
-
----
+<ButtonContained
+  text="View GitHub Repository"
+  linkTo="https://github.com/smswithoutborders/RelaySMS-Publisher"
+/>

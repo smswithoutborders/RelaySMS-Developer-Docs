@@ -1,41 +1,20 @@
-RelaySMS Vault is the security core of the RelaySMS ecosystem, responsible for:
+import ButtonContained from "../../components/buttonContained.jsx";
 
-- **Authentication & Authorization:** Managing user access and permissions.
-- **Access Token Management:** Secure storage and handling of tokens for supported protocols.
-- **Data Security:** Encryption of sensitive data and secure message transmission.
+## Description
 
-### Quick Start
+The Vault is a secure service that handles token management and message encryption/decryption for the RelaySMS system. It acts as the central security authority, managing tokens and providing cryptographic services for both publisher and bridge components.
 
-- <a href="https://github.com/smswithoutborders/RelaySMS-Vault/tree/main?tab=readme-ov-file#quick-start" target="_blank" rel="noopener noreferrer">Quick Start Guide</a>
+## How It Works
 
-### References
+The Vault manages token storage and message encryption/decryption for the RelaySMS system.
 
-- <a href="https://github.com/smswithoutborders/RelaySMS-Vault/blob/main/docs/security.md" target="_blank" rel="noopener noreferrer">Security</a>: Vault security details
-- <a href="https://github.com/smswithoutborders/RelaySMS-Vault/blob/main/docs/grpc.md" target="_blank" rel="noopener noreferrer">gRPC</a>: gRPC integration and usage
-- <a href="https://github.com/smswithoutborders/RelaySMS-Vault/blob/main/docs/specifications.md" target="_blank" rel="noopener noreferrer">Specifications</a>:
-  - <a href="https://github.com/smswithoutborders/RelaySMS-Vault/blob/main/docs/specifications.md#1-long-lived-tokens-llts" target="_blank" rel="noopener noreferrer">Long-Lived Tokens (LLTs)</a>
-  - <a href="https://github.com/smswithoutborders/RelaySMS-Vault/blob/main/docs/specifications.md#2-device-id" target="_blank" rel="noopener noreferrer">Device IDs</a>
-- <a href="https://github.com/smswithoutborders/RelaySMS-Vault/blob/main/docs/api_versions.md" target="_blank" rel="noopener noreferrer">REST API Resources</a>:
-  - <a href="https://github.com/smswithoutborders/RelaySMS-Vault/blob/main/docs/api_v3.md" target="_blank" rel="noopener noreferrer">API V3</a>
+- Components request tokens or encryption services from Vault
+- Vault validates request signatures and user permissions
+- Vault securely stores and retrieves authentication tokens
+- Vault encrypts and decrypts messages for Publisher and Bridge operations
+- Vault maintains cryptographic keys and ensures message security across the system
 
-### Contributing
-
-- <a href="https://github.com/smswithoutborders/RelaySMS-Vault/tree/main?tab=readme-ov-file#contributing" target="_blank" rel="noopener noreferrer">Contributing Guide</a>
-
-<div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
-  <a
-    href="https://github.com/smswithoutborders/RelaySMS-Vault"
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{
-      padding: '0.5em 1.5em',
-      background: '#24292f',
-      color: '#fff',
-      borderRadius: '4px',
-      textDecoration: 'none',
-      fontWeight: '500'
-    }}
-  >
-    GitHub Repository
-  </a>
-</div>
+<ButtonContained
+  text="View GitHub Repository"
+  linkTo="https://github.com/smswithoutborders/RelaySMS-Vault"
+/>

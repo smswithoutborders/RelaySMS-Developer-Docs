@@ -1,47 +1,22 @@
-The **Bridge Server** is a specialized component within the RelaySMS (SMSWithoutBorders) ecosystem that enables **secure, internet-free communication** with online platforms via SMS without creating an account or saving platforms. 
-This is achieved by creating an alias with the user’s phone number(your-number@relaysms.com)
+import ButtonContained from "../../components/buttonContained.jsx";
 
-### What Is the Bridge?
+## Description
 
-The Bridge is a technology designed to:
+Bridge Server handles bridge communication by routing messages to bridge clients (currently email bridge) using phone number-based aliases. It sends to bridge clients and listens for replies to those aliases.
 
-- Establish **secure handshakes** between users and online platforms using pre-shared keys or signatures
-- Enable **end-to-end encrypted message exchange** over standard SMS
-- Bypass the need for login/sign-up or savings platforms
+## How It Works
 
-This effectively turns your basic phone into a powerful tool for interacting with online platforms without logging in or saving platforms.
+The Bridge Server routes messages to bridge clients and manages bidirectional communication through phone number-based aliases.
 
----
+- Gateway Server sends publishing request to Bridge Server
+- Bridge Server determines the target bridge for the message
+- Bridge Server sends message content to Vault to be decrypted
+- Bridge Server sends message to the appropriate bridge client
+- Bridge Server listens for replies to that alias
+- When reply is received, Bridge Server forwards it to Vault for encryption
+- Vault encrypts the response and the Bridge Server sends it to user via SMS
 
-### How It Works
-### How It Works
-
-1. A user sends an SMS command (e.g., "Send Email") formatted for Bridge handling
-2. The message is encrypted and signed on the user’s device
-3. It is routed via a Gateway Client to the **Bridge Server**
-4. The Bridge authenticates the payload and decrypts the message
-5. It executes the request online using the stored tokens via the Publisher module
-6. The result is encrypted and sent back to the user through SMS
-
----
-
-### Features
-### Features
-
-- **Full encryption** of messages (both directions)
-- **Offline-first** – designed for users with unreliable or no internet
-- **Bridge Routing** – based on available bridges listed in [`bridges.json`](https://github.com/smswithoutborders/RelaySMS-Bridge-Server/blob/main/resources/bridges.json)
-
----
-
-### Learn More
-### Learn More
-
-[![Bridge Specification](https://img.shields.io/badge/🌉_Bridge-Specification-teal?style=for-the-badge&logo=github)](https://github.com/smswithoutborders/RelaySMS-Bridge-Server/blob/main/docs/specifications.md)
-
-[![Supported Bridge Platforms](https://img.shields.io/badge/🔗_Platforms-bridges.json-coral?style=for-the-badge&logo=github)](https://github.com/smswithoutborders/RelaySMS-Bridge-Server/blob/main/resources/bridges.json)
-
----
-
-> **Did You Know?** The Bridge lets users post on Twitter or send emails with nothing but a feature phone and a signal bar—no apps, no data plan needed.
-> **Did You Know?** The Bridge lets users post on Twitter or send emails with nothing but a feature phone and a signal bar—no apps, no data plan needed.
+<ButtonContained
+  text="View GitHub Repository"
+  linkTo="https://github.com/smswithoutborders/RelaySMS-Bridge-Server"
+/>

@@ -1,47 +1,18 @@
-The **Gateway Server** acts as the **bridge between SMS messages received by gateway clients** and the **Publisher module**, facilitating secure and real-time communication across the system.
+import ButtonContained from "../../components/buttonContained.jsx";
 
----
+## Description
 
-###  What Does the Gateway Server Do?
+Gateway Server receives SMS messages from gateway clients and routes them to the correct processing component (Publisher or Bridge Server) based on message type. The server listens on HTTP, SMTP, or FTP protocols.
 
-The Gateway Server is responsible for:
+## How It Works
 
-1.  **Receiving inbound SMS messages** from registered gateway clients
-2.  **Parsing and validating** message payloads (including sender ID, message type, and timestamps)
-3.  **Forwarding valid requests** to the Publisher for further processing and token-based execution
-4.  **Receiving responses** from the Publisher and queuing them for outbound delivery via SMS
+The Gateway Server acts as the central routing hub that receives messages from gateway clients and determines where to send them for processing.
 
-It ensures the **synchronization** and **communication handshake** between the physical SMS layer and the digital token-based execution layer.
+- Gateway Client forwards SMS message to Gateway Server via HTTP, SMTP, or FTP
+- Gateway Server receives and decodes the message to determine its type
+- Gateway Server routes message to appropriate component (Publisher or Bridge Server)
 
----
-
-###  How It Works
-
-When a user sends an SMS to a RelaySMS gateway client:
-
-1. The message is picked up by the Gateway Server
-2. The Gateway Server validates the payload and performs any initial preprocessing
-3. It then forwards the request to the **Publisher** over a secure channel
-4. After execution, the response is returned to the Gateway Server
-5. The server sends this response back to the user via SMS
-
-All steps are secure, auditable, and optimized for low-latency environments.
-
----
-
-###  Key Features
-
--  **Secure Communication** between gateway and publisher
--  **Payload Logging** for reliability and traceability
--  **Load-Aware Routing** to balance requests between multiple publishers (if scaled)
--  **Retry Mechanism** for failed SMS deliveries
-
----
-
-###  Learn More
-
-[![Gateway Server Repo](https://img.shields.io/badge/🖥️_Server-Repository-darkblue?style=for-the-badge&logo=github)](https://github.com/smswithoutborders/RelaySMS-Gateway-Server)
-
----
-
->  **Pro Tip:** Want to self-host? You can deploy your own Gateway Server and connect it to a private or public RelaySMS network.
+<ButtonContained
+  text="View GitHub Repository"
+  linkTo="https://github.com/smswithoutborders/RelaySMS-Gateway-Server"
+/>

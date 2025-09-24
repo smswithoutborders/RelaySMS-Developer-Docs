@@ -1,83 +1,20 @@
-[![Email Bridge](https://img.shields.io/badge/Email_Bridge-E4405F?style=for-the-badge&logo=gmail&logoColor=white)](https://github.com/smswithoutborders/RelaySMS-Bridge-EmailClient)
+import ButtonContained from "../../components/buttonContained.jsx";
 
-The **RelaySMS Email Bridge** enables users to send emails when they don't have direct access to their email account but need to communicate. This bridge component provides email functionality for users who can only access SMS communication channels.
+## Description
 
-## Overview
+Email Bridge converts phone numbers into email addresses, enabling users to send and receive emails through SMS without needing personal email accounts.
 
-The Email Bridge uses the sender's phone number as an email alias, allowing communication through email when direct email access is unavailable. The email is relayed to recipients with the sender's phone number as the prefix and the bridge server's hostname as the domain (e.g., `237123456789@relaysms.me`), enabling recipients to identify the sender based on their phone number.
+## How It Works
 
-## Technical Architecture
+The Email Bridge receives content from the Bridge Server and generates email aliases from phone numbers to send emails to users' specified recipients. The system creates aliases in the format +123456789@relaysms.me based on the user's phone number.
 
-### SimpleLogin Integration
+- Bridge Server sends content to the Email Client with user's phone number
+- Email Client generates an email alias from the phone number (+123456789@relaysms.me)
+- Email Client uses the generated alias to send emails to the user's specified recipient
+- Recipient receives email from the phone number-based alias
+- Email Client returns delivery confirmation to Bridge Server
 
-The bridge leverages **SimpleLogin** for robust email alias management:
-
-- **Dynamic Alias Creation**: Automatically generates email aliases based on phone numbers
-- **Reverse Alias Management**: Creates reverse aliases for recipient email handling
-- **Contact Management**: Maintains contact relationships for ongoing conversations
-- **Privacy Protection**: Shields actual email addresses through alias system
-
-### Core Components
-
-**Phone Number Alias System**
-
-- Converts phone numbers to email aliases using configurable prefix/suffix patterns
-- Maintains persistent alias mappings for consistent sender identification
-- Supports international phone number formats
-
-**SMTP Bridge Server**
-
-- Handles secure email transmission via configured SMTP servers
-- Supports TLS encryption for secure communication
-- Manages authentication and message delivery
-
-**API Integration**
-
-- SimpleLogin API integration for alias and contact management
-- Automatic mailbox detection and configuration
-- Error handling and retry mechanisms
-
-## Key Features
-
-### **Automatic Alias Management**
-
-- **Phone-to-Email Mapping**: Converts phone numbers to consistent email aliases
-- **Persistent Aliases**: Maintains long-term alias associations for ongoing conversations
-- **Reverse Alias Creation**: Automatically generates aliases for email recipients
-
-### **Full Email Support**
-
-- **CC/BCC Support**: Complete email functionality with carbon copy options
-- **Subject and Body**: Full email composition capabilities
-- **SMTP Delivery**: Reliable email transmission through SMTP servers
-
-### **Privacy & Security**
-
-- **Email Address Protection**: Shields real email addresses through alias system
-- **TLS Encryption**: Secure SMTP transmission with TLS support
-- **Authentication**: Secure API authentication for SimpleLogin integration
-
-### **Flexible Configuration**
-
-- **Customizable Aliases**: Configurable prefix/suffix patterns for phone number aliases
-- **SMTP Settings**: Flexible SMTP server configuration
-- **Environment Variables**: Easy deployment configuration
-
-## Benefits
-
-- **Accessibility**: Enables email communication for users with limited internet access
-- **Privacy**: Protects email addresses through alias system
-- **Reliability**: Robust error handling and delivery confirmation
-- **Flexibility**: Supports various SMTP providers and configurations
-- **Scalability**: Handles multiple concurrent email operations
-
-The Email Bridge represents a crucial component in making digital communication accessible to users regardless of their connectivity constraints, bridging the gap between SMS and email communication channels through innovative alias management and secure relay functionality.
-
----
-
-<div className="button-group">
-  [![View
-  Documentation](https://img.shields.io/badge/View_Documentation-4285F4?style=for-the-badge&logo=google-docs&logoColor=white)](https://github.com/smswithoutborders/RelaySMS-Bridge-EmailClient)
-  [![Source
-  Code](https://img.shields.io/badge/Source_Code-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/smswithoutborders/RelaySMS-Bridge-EmailClient)
-</div>
+<ButtonContained
+  text="View GitHub Repository"
+  linkTo="https://github.com/smswithoutborders/RelaySMS-Bridge-EmailClient"
+/>

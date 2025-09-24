@@ -53,7 +53,7 @@ const nodes = [
   {
     id: "Platforms",
     data: { label: "Platforms" },
-    position: { x: 940, y: 120 },
+    position: { x: 940, y: 80 },
     targetPosition: "left",
     sourcePosition: "right",
     style: { width: 120, background: "#e3f2fd" },
@@ -122,17 +122,19 @@ const edges = [
     markerEnd: { type: "arrowclosed", width: 20, height: 20 },
   },
   {
-    id: "e9",
+    id: "e7",
     source: "Publisher",
     target: "Platforms",
     label: "Content",
+    type: "straight",
     animated: true,
     markerEnd: { type: "arrowclosed", width: 20, height: 20 },
   },
   {
-    id: "e12",
+    id: "e8",
     source: "BridgeServer",
     target: "EmailBridge",
+    label: "Content",
     type: "straight",
     animated: true,
     markerEnd: { type: "arrowclosed", width: 20, height: 20 },
@@ -147,7 +149,7 @@ const nodeClickMap = {
   BridgeServer: "BridgeServer",
   Vault: "Vault",
   Platforms: "Platforms",
-  EmailBridge: "EmailBridge"
+  EmailBridge: "EmailBridge",
 };
 
 const Overview = ({ handleDrawerOpen }) => (

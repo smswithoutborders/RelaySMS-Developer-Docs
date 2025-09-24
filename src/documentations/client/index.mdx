@@ -1,30 +1,29 @@
-### Android
+import ButtonContained from "../../components/buttonContained.jsx";
 
-RelaySMS for Android offers a seamless way to interact with online services without internet access.  
-Once configured, it securely sends your messages over SMS by leveraging encrypted Vaults that store your OAuth2 tokens.  
-Tweet, email, or send Telegram messages from remote locations—**your data stays private and your communication uninterrupted**.
+## Description
 
-**Download:**  
-[![Get it on Google Play](https://img.shields.io/badge/Play_Store-Download-blue?logo=google-play&logoColor=white)](https://play.google.com/store/apps/details?id=com.afkanerd.sw0b)  
-[![View on GitHub](https://img.shields.io/badge/GitHub-Source_Code-black?logo=github)](https://github.com/smswithoutborders/RelaySMS-Android)
+Client apps (Android/iOS) are mobile applications that allow users to publish content to social media platforms through SMS when internet connectivity is limited or unavailable. They also handle decryption of bridge replies when responses are sent to bridge message aliases.
 
-**Contribute:**  
-[![GitHub Contributors](https://img.shields.io/github/contributors/your-repo-link-here)](https://github.com/smswithoutborders/RelaySMS-Android)
+## How It Works
 
----
+Client apps encrypt user messages and send them via SMS to gateway clients. OAuth2 tokens can optionally be stored locally on the device for convenience. If not stored locally, the Publisher will retrieve them from the Vault when processing platform payloads. Clients also decrypt replies to bridge messages sent via aliases.
 
-### iOS
+- User creates message content in the mobile app
+- App encrypts message (with local tokens if stored)
+- App sends encrypted SMS to gateway client phone number
+- Gateway client receives and forwards message to system
+- For platform payloads: Publisher retrieves tokens from Vault if not included in message
+- App receives SMS confirmation once content is published successfully
+- For bridge messages: When replies are sent to the alias, Bridge Server forwards them via SMS
+- App decrypts and displays bridge replies to the user
 
-RelaySMS for iOS brings the same offline connectivity to Apple users.  
-With token-based authorization and end-to-end encryption, RelaySMS lets you send secure SMS-based commands to services like Gmail, Twitter, and Telegram—**without needing mobile data or Wi-Fi**.
-
-**Download:**  
-[![Download on the App Store](https://img.shields.io/badge/App_Store-Download-blue?logo=apple)](https://apps.apple.com/us/app/relaysms/id6630382970)  
-[![View on GitHub](https://img.shields.io/badge/GitHub-Source_Code-black?logo=github)](https://github.com/smswithoutborders/RelaySMS-iOS)
-
-**Contribute:**  
-[![GitHub Issues](https://img.shields.io/github/issues/your-repo-link-here)](https://github.com/smswithoutborders/RelaySMS-iOS)
-
----
-
-> 💡 _RelaySMS (SMSWithoutBorders) is open-source and community-driven. Help us shape the future of offline messaging!_
+<div style={{ display: "flex", gap: "16px" }}>
+  <ButtonContained
+    text="View Android Repository"
+    linkTo="https://github.com/smswithoutborders/RelaySMS-Android"
+  />
+  <ButtonContained
+    text="View iOS Repository"
+    linkTo="https://github.com/smswithoutborders/RelaySMS-iOS"
+  />
+</div>
